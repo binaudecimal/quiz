@@ -16,7 +16,7 @@
                             <option value='car'>Cordillera Administrative Region (CAR)</option>
                             <option value='region2'>Cagayan Valley (Region 2)</option>
                             <option value='region3'>Central Luzon (Region 3)</option>
-                            <option value='region4a'>CALABARZOB (Region 4A)</option>
+                            <option value='region4a'>CALABARZON (Region 4A)</option>
                             <option value='mimaropa'>Southwestern Tagalog Region (MIMAROPA)</option>
                             <option value='region5'>Bicol Region (Region 5)</option>
                             <option value='region6'>Western Visayas (Region 6)</option>

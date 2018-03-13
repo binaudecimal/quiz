@@ -14,5 +14,10 @@
 				session_start();
 			}
 		}
+
+		public static function getAllUsers(){
+			$umodel = new User();
+			print_r($umodel->getAllUsers());
+		}
 	}
 ?>

@@ -24,4 +24,7 @@
     Route::set('quiz-take', function(){
         Controller::createView('quiz-take');
     });
+    Route::set('signup-submit', function(){
+        Controller::getAllUsers();
+    });
 ?>

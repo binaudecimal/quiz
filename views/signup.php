@@ -7,7 +7,7 @@
             <h5 class='hero text-align-center'>SIGNUP</h5>
             <hr class='my-4'>
             <div class='container'>
-                <form>
+                <form action='signup-submit' method='POST'>
                     <div class='form-group'>
                         <label for="first">First Name</label>
                         <input class='form-control' type='text' placeholder='First Name' name='first' id='first'>

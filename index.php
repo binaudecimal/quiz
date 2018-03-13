@@ -11,11 +11,9 @@
 		}
 		elseif(file_exists('./models/'.$class_name.'.php')){
 			require_once './models/'.$class_name.'.php';
+
 		}elseif(file_exists('./views/'.$class_name.'.php')){
 			require_once './views/'.$class_name.'.php';
-		}
-		elseif(file_exists('./includes/'.$class_name.'.png')){
-			require_once './includes/'.$class_name.'.png';
 		}
 	}
 ?>

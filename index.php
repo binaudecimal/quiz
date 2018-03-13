@@ -1,6 +1,6 @@
 <?php
 	require_once('Routes.php');
-
+    Controller::setSession();
 	function __autoload($class_name){
 
 		if(file_exists('./classes/'.$class_name.'.php')){

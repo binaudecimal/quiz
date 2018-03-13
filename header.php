@@ -1,3 +1,7 @@
+<?php
+    Controller::setSession();
+?>
+
 <html>
     <header>
         <title>Philippine Quiz Game</title>
@@ -10,7 +14,6 @@
         <div class='container-fluid'>
                     <nav class='navbar navbar-expand-lg navbar-dark bg-primary'>
 					 <a class="navbar-brand" href="home">Home</a>
-                        
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ml-auto">
                             <li class='nav-item'>
@@ -19,9 +22,31 @@
                             <li class='nav-item'>
                                 <a class='nav-link' href='teacher'>TEACHER</a>
                             </li> 
-                            <li class='nav-item'>
-                                <a class='nav-link' href='signup'>SIGNUP</a>
-                            </li>  
+                            <?php
+                                if(!isset($_SESSION['username']) || !isset($_SESSION['session_id'])){
+                                    echo "
+                                        <form class='form-inline' action='login' method='POST'>
+                                            <li class='nav-item'>
+                                                <input class='form-control' type='text' placeholder='Username' name='username'>
+                                            </li>
+                                            <li class='nav-item'>
+                                                <input class='form-control' type='password' placeholder='Password' name='password'>
+                                            </li>
+                                            <li class='nav-item'>
+                                                <button class='btn btn-light' role='submit' type='submit' name='login-submit'>LOGIN</button>
+                                            </li>
+                                        </form>
+                                    ";
+                                }
+                            else{
+                                echo "
+                                    <li class='nav-item'>
+                                        <a class='btn btn-light' role='button' name='logout-submit' href='logout'>LOGOUT</a>
+                                    </li>
+                                ";
+                            }
+                            ?>
+                            
                         </ul>
                     </div>
 			     </nav>

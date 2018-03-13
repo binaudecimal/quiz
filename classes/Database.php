@@ -2,7 +2,7 @@
 	class Database{
 
 		public static $host = 'localhost';
-		public static $dbname = 'quiz_game';
+		public static $dbname = 'quiz';
 		public static $username ='root';
 		public static $password = '';
 

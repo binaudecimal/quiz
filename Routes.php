@@ -27,4 +27,10 @@
     Route::set('signup-submit', function(){
         Controller::getAllUsers();
     });
+    Route::set('login', function(){
+        UserController::login();
+    });
+    Route::set('logout', function(){
+        UserController::logout();
+    });
 ?>

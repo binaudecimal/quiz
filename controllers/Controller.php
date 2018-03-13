@@ -19,5 +19,6 @@
 			$umodel = new User();
 			print_r($umodel->getAllUsers());
 		}
+        
 	}
 ?>

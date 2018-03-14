@@ -12,8 +12,14 @@
     Route::set('teacher', function(){
         Controller::createView('teacher-home');
     });
+    Route::set('admin', function(){
+        Controller::createView('admin-home');
+    });
     Route::set('signup', function(){
         Controller::createView('signup');
+    });
+    Route::set('add-class', function(){
+        SectionController::addClass();
     });
     Route::set('add-question', function(){
         Controller::createView('add-question');
@@ -25,7 +31,7 @@
         Controller::createView('quiz-take');
     });
     Route::set('signup-submit', function(){
-        Controller::getAllUsers();
+        UserController::signup();
     });
     Route::set('login', function(){
         UserController::login();

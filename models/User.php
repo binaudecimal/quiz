@@ -11,14 +11,45 @@ class User extends Database{
 		return $result;
 	}
 
-	public function enroll(){
-		
+	public function insertUser($username, $password, $first, $last, $type){
+		try{
+            $hashed_pw = password_hash($password, PASSWORD_DEFAULT);
+            $pdo = self::connect();
+            $pdo->beginTransaction();
+            $stmt = $pdo->prepare('INSERT INTO users(username, password, first, last, type) values (?,?,?,?,?)');
+            $stmt->execute(array($username, $hashed_pw, $first, $last, $type));
+            $pdo->commit();
+            
+            //var_dump($type);
+            return array('username'=>$username,
+                         'password'=>$password,
+                         'first'=>$first,
+                         'last'=>$last,
+                         'type'=>$type,
+                        );
+        }
+        catch(Exception $e){
+            echo "Error occurred ". $e->getMessage();
+            $pdo->rollBack();
+            return false;
+        }
 	}
 
-	public function login(){
-
-	}
-
+    public function enrollTeacher($user_id){
+        try{
+            $pdo = self::connect();
+            $pdo->beginTransaction();
+            $stmt = $pdo->prepare('INSERT INTO teachers (user_id) VALUES (?)');
+            $stmt->execute(array($user_id));
+            $pdo->commit();
+            return true;
+        }
+        catch(Exception $e){
+            $pdo->rollBack();
+            return false;
+        }
+        
+    }
 	public function logout($username){
         try{
             $pdo = self::connect();

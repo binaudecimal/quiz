@@ -22,6 +22,9 @@
                             <li class='nav-item'>
                                 <a class='nav-link' href='teacher'>TEACHER</a>
                             </li> 
+                            <li class='nav-item'>
+                                <a class='nav-link' href='admin'>ADMIN</a>
+                            </li> 
                             <?php
                                 if(!isset($_SESSION['username']) || !isset($_SESSION['session_id'])){
                                     echo "

@@ -21,9 +21,14 @@
                         <select class="form-control" id="type" name='type'>
                           <option>STUDENT</option>
                           <option>TEACHER</option>
-                          <option>ADMIN</option>
                         </select>
-
+                        <div id='additional-form'>
+                            <label for="class">Class</label>
+                            <select class="form-control" id="class" name='class'>
+                                <option>6-BATUMBAKAL</option>
+                                <option>6-BATIBOT</option>
+                            </select>
+                        </div>
                         <div class='container-fluid mt-3'>
                             <button class='btn btn-primary'>SUBMIT</button>
                             <button class='btn btn-secondary'>CANCEL</button>
@@ -34,3 +39,10 @@
         </div>
     </div>
 </div>
+<script>
+    $('#type').click(function(){
+       $('#type').change(function(){
+          $('#additional-form').toggle(200);
+       });
+    });
+</script>

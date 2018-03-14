@@ -5,7 +5,30 @@
 <div clsas='container'>
     <a class='btn btn-primary' role='button' href='signup'>SIGNUP</a>
     <button class='btn btn-primary' role='button' data-toggle='modal' data-target='#add-class-modal'>ADD CLASS</button>
+    <div class='row h-100'>
+        <div class='container col-3' style='bg-color:#e3e3e3;'>
+            <h4 class='display-4'>Class List</h4>
+            <?php
+                $classes = SectionController::getAllClasses();
+                foreach($classes as $item){
+                    echo"
+                    <p>
+                        <strong>Section:</strong>".$item['section_name']."</br>
+                        <strong>Teacher:</strong>".$item['last'].", ".$item['first']."</br>
+                    </p>
+                    ";
+                }
+            ?>
+        </div>
+        <div class='container col-3' style='bg-color:#e1e1e1;'>
+
+        </div>
+        <div class='container col-3' style='bg-color:#d2d2d2;'>
+
+        </div>
+    </div>
 </div>
+
 
 <div class='modal fade' id='add-class-modal' role='dialog'>
     <div class='modal-dialog' role='document'>

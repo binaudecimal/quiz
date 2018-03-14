@@ -19,4 +19,10 @@ class SectionController extends Controller{
         $teachers = $section_model->getAllTeachers();
         return $teachers;
     }
+    
+    public static function getAllClasses(){
+        $section_model = new Section();
+        $classes = $section_model->getAllClasses();
+        return $classes;
+    }
 }

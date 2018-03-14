@@ -25,8 +25,16 @@
                         <div id='additional-form'>
                             <label for="class">Class</label>
                             <select class="form-control" id="class" name='class'>
-                                <option>6-BATUMBAKAL</option>
-                                <option>6-BATIBOT</option>
+                                <?php
+                                    $classes = SectionController::getAllClasses();
+                                    foreach($classes as $item){
+                                        echo "
+                                            <option value='".$item['class_id']."'>
+                                                ".$item['section_name']."
+                                            </option>
+                                        ";
+                                    }
+                                ?>
                             </select>
                         </div>
                         <div class='container-fluid mt-3'>
@@ -40,9 +48,9 @@
     </div>
 </div>
 <script>
-    $('#type').click(function(){
-       $('#type').change(function(){
-          $('#additional-form').toggle(200);
-       });
-    });
+
+   $('#type').change(function(){
+      $('#additional-form').toggle(1000);
+   });
+
 </script>

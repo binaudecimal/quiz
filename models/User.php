@@ -47,9 +47,26 @@ class User extends Database{
         catch(Exception $e){
             $pdo->rollBack();
             return false;
-        }
-        
+        } 
     }
+    
+    public function enrollStudent($user_id, $class_id){
+        try{
+            $pdo = self::connect();
+            $pdo->beginTransaction();
+            $stmt = $pdo->prepare('INSERT INTO students (user_id, class_id) VALUES (?,?)');
+            $stmt->execute(array($user_id, $class_id));
+            $pdo->commit();
+            return true;
+        }
+        catch(Exception $e){
+            echo "Error occured" . $e->getMessage();
+            $pdo->rollBack();
+            
+            return false;
+        } 
+    }
+    
 	public function logout($username){
         try{
             $pdo = self::connect();

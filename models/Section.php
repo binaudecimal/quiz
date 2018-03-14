@@ -24,7 +24,14 @@ class Section extends Database{
     
     public function getAllClasses(){
        $pdo = self::connect();
-        $stmt = $pdo->query('SELECT class.section_name, users.first, users.last from class NATURAL JOIN teachers NATURAL JOIN users');
+        $stmt = $pdo->query('SELECT class.section_name, users.first, users.last, class.class_id from class NATURAL JOIN teachers NATURAL JOIN users');
+        $stmt->execute();
+        return $stmt->fetchAll(); 
+    }
+    
+    public function getAllStudents(){
+       $pdo = self::connect();
+        $stmt = $pdo->query('SELECT class.section_name, users.first, users.last, class.class_id from students NATURAL JOIN class LEFT JOIN users ON users.user_id = students.user_id');
         $stmt->execute();
         return $stmt->fetchAll(); 
     }

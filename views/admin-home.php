@@ -21,10 +21,31 @@
             ?>
         </div>
         <div class='container col-3' style='bg-color:#e1e1e1;'>
-
+            <h4 class='display-4'>Teachers List</h4>
+            <?php
+                $teachers = SectionController::getAllTeachers();
+                foreach($teachers as $item){
+                    echo"
+                    <p>
+                        <strong>Teacher:</strong>".$item['last'].", ".$item['first']."</br>
+                    </p>
+                    ";
+                }
+            ?>
         </div>
         <div class='container col-3' style='bg-color:#d2d2d2;'>
-
+            <h4 class='display-4'>Students List</h4>
+            <?php
+                $students = SectionController::getAllStudents();
+                foreach($students as $item){
+                    echo"
+                    <p>
+                        <strong>Student:</strong>".$item['last'].", ".$item['first']."</br>
+                        <strong>Section:</strong>".$item['section_name']."</br>
+                    </p>
+                    ";
+                }
+            ?>
         </div>
     </div>
 </div>

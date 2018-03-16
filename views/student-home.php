@@ -5,7 +5,7 @@
                   Status goes here
             </div>
             
-            <a class='btn btn-primary float-left' role='btn' href='quiz-take'>Start Quiz</a> 
+            <a class='btn btn-primary float-left' role='btn' href='quiz-start'>Start Quiz</a> 
         </div>
     </div>
 </div>

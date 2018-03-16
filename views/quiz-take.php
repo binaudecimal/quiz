@@ -1,3 +1,8 @@
+<?php
+    $question = QuestionController::getQuestion();
+    
+?>
+
 <div class='container-fluid'>
     <div class='jumbotron h-100'>
         <div class='container'>
@@ -9,17 +14,17 @@
                 <h6 class='display-6 al-auto'>Timer</h6>
             </div>
             <div class='row justify-content-center'>
-                <h4 class='display-4'>Region</h4>
+                <h4 class='display-4'><?php echo $question['region']; ?></h4>
             </div>
             <div class='row'>
-                <p class='lead'>The question goes in here</p>
+                <p class='lead'><?php echo $question['question']; ?></p>
             </div>
             <div class='row'>
                 <div class='container'>
-                    <button class='btn btn-light' type='button' accesskey='z'>Answer 1</button>
-                    <button class='btn btn-light' type='button' accesskey='x'>Answer 2</button>
-                    <button class='btn btn-light' type='button' accesskey='c'>Answer 3</button>
-                    <button class='btn btn-light' type='button' accesskey='v'>Answer 4</button>
+                    <button class='btn btn-light' type='button' accesskey='z'><?php echo $question['answers'][0]; ?></button>
+                    <button class='btn btn-light' type='button' accesskey='x'><?php echo $question['answers'][1]; ?></button>
+                    <button class='btn btn-light' type='button' accesskey='c'><?php echo $question['answers'][2]; ?></button>
+                    <button class='btn btn-light' type='button' accesskey='v'><?php echo $question['answers'][3]; ?></button>
                 </div>
             </div>
         </div>

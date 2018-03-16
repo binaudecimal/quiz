@@ -27,20 +27,33 @@ class QuestionController extends Controller{
     }
     
     public static function startQuiz(){
-        //check for student ID
-        /*
-            if quiz active, get next question
-                
-            if no quiz active, clean session first before throw back home
-        */
         self::setSession();
         if(!isset($_SESSION['student_id'])){
             echo 'Go back home!';
         }
         $student_id = $_SESSION['student_id'];
         $question_model = new Question();
-        if(!$question_model->isQuizActive($student_id)) echo 'no active quiz';
-        $question_model->processQuiz($student_id);
+        $quiz = $question_model->isQuizActive($student_id);
+        if(!$quiz) echo 'No quiz is active!';
+        $next_question = $question_model->processQuiz($student_id, $quiz['qinstance_id'], $quiz['region'], $quiz['items']);
+        if(!$question_model->processQuiz($student_id, $quiz['qinstance_id'], $quiz['region'], $quiz['items'])){
+            header('Location: student?status=quizStart-failed');
+            exit();
+        }
+        else{
+            $_SESSION['question_id'] = $next_question;
+            header('Location: quiz-take');
+            exit();
+        }
+
+        
+    }
+    
+    public static function getQuestion(){
+        self::setSession();
+        $question_model = new Question();
+        return $question_model->getQuestion($_SESSION['question_id']);
+        
     }
     
 }

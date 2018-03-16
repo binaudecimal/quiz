@@ -27,7 +27,7 @@
     Route::set('edit-question', function(){
         Controller::createView('edit-question');
     });
-    Route::set('quiz-take', function(){
+    Route::set('quiz-start', function(){
         QuestionController::startQuiz();
     });
     Route::set('signup-submit', function(){
@@ -45,5 +45,8 @@
     });
     Route::set('generate-quiz', function(){
         QuestionController::generateQuiz();
+    });
+    Route::set('quiz-take', function(){
+        Controller::createView('quiz-take');
     });
 ?>

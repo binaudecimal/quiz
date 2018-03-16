@@ -53,7 +53,14 @@ class QuestionController extends Controller{
         self::setSession();
         $question_model = new Question();
         return $question_model->getQuestion($_SESSION['question_id']);
-        
+    }
+    
+    public static function processAnswer(){
+        self::setSession();
+        $answer = $_POST['answer-value'];
+        $question_id = $_SESSION['question_id'];
+        $question_model = new Question();
+        $question_model->processAnswer($answer, $question_id);
     }
     
 }

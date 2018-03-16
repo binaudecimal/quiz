@@ -20,13 +20,39 @@
                 <p class='lead'><?php echo $question['question']; ?></p>
             </div>
             <div class='row'>
-                <div class='container'>
-                    <button class='btn btn-light' type='button' accesskey='z'><?php echo $question['answers'][0]; ?></button>
-                    <button class='btn btn-light' type='button' accesskey='x'><?php echo $question['answers'][1]; ?></button>
-                    <button class='btn btn-light' type='button' accesskey='c'><?php echo $question['answers'][2]; ?></button>
-                    <button class='btn btn-light' type='button' accesskey='v'><?php echo $question['answers'][3]; ?></button>
-                </div>
+                <form action='quiz-submit-answer' method='POST' id='answer-form'>
+                    <div class='container'>
+                        <input type='hidden' name='answer-value' value="novalue" id='hidden-answer'> 
+                        <button class='btn btn-light' type='button' id='answer-button1' accesskey='z' value='<?php echo $question['answers'][0]; ?>'><?php echo $question['answers'][0]; ?></button>
+                        <button class='btn btn-light' type='button' id='answer-button2' accesskey='x'value='<?php echo $question['answers'][1]; ?>'><?php echo $question['answers'][1]; ?></button>
+                        <button class='btn btn-light' type='button' id='answer-button3' accesskey='c'value='<?php echo $question['answers'][2]; ?>'><?php echo $question['answers'][2]; ?></button>
+                        <button class='btn btn-light' type='button' id='answer-button4' accesskey='v' value='<?php echo $question['answers'][3]; ?>'><?php echo $question['answers'][3]; ?></button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
+<script>
+    $('document').ready(function(){
+        $('#answer-button1').click(function(){
+            $('#hidden-answer').val($(this).val());
+            $('#answer-form').submit();
+        });
+    });
+    $('#answer-button2').click(function(){
+            $('#hidden-answer').val($(this).val());
+            alert($('#hidden-answer').val());
+            $('#answer-form').submit();
+        });
+    $('#answer-button3').click(function(){
+            $('#hidden-answer').val($(this).val());
+            alert($('#hidden-answer').val());
+            $('#answer-form').submit();
+        });
+    $('#answer-button4').click(function(){
+            $('#hidden-answer').val($(this).val());
+            alert($('#hidden-answer').val());
+            $('#answer-form').submit();
+        });
+</script>

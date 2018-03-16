@@ -49,4 +49,7 @@
     Route::set('quiz-take', function(){
         Controller::createView('quiz-take');
     });
+    Route::set('quiz-submit-answer', function(){
+        QuestionController::processAnswer();
+    });
 ?>

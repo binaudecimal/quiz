@@ -2,22 +2,6 @@
 
 class Question extends Database{
 	
-	function addQuestion(){
-
-	}
-
-	function editQuestion(){
-
-	}
-
-	function processAnswer(){
-
-	}
-
-	function getAllQuestions(){
-
-	}
-	
     public function getAllQuiz(){
         try{
             $pdo = self::connect();
@@ -108,7 +92,12 @@ class Question extends Database{
             $stmt = $pdo->prepare('SELECT questions.question_id from answer_instance NATURAL JOIN quiz_instance NATURAL JOIN questions where quiz_instance.qinstance_id = ? and weighted_score is NULL limit 1');
             $stmt->execute(array($qinstance_id));
             $next_question = $stmt->fetch();
-            if(!$next_question) return false;
+            if(!$next_question){
+                //cleanse session and put date_completed on qinstance
+                $stmt = $pdo->prepare('UPDATE quiz_instance set date_finished = NOW() where qinstance_id = ?');
+                $stmt->execute(array($qinstance_id));
+                return false;
+            }
             return $next_question['question_id'];
         }
         catch(Exception $e){
@@ -132,6 +121,27 @@ class Question extends Database{
         }
         catch(Exception $e){
             echo $e->getMessage();
+        }
+    }
+    public function processAnswer($answer, $question_id){
+        try{
+            $pdo = self::connect();
+            var_dump($answer);
+            $stmt = $pdo->prepare('SELECT answer_correct from questions where question_id = ?');
+            $stmt->execute(array($question_id));
+            $correct_answer = $stmt->fetch()['answer_correct'];
+            $pdo->beginTransaction();
+            $score = 0;
+            if($answer == $correct_answer){
+                $score = 1;
+            }
+            //update scores
+            
+            $commit();
+        }
+        catch(Exception $e){
+            $pdo->rollBack();
+            return false;
         }
     }
 }

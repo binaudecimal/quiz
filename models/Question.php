@@ -57,7 +57,31 @@ class Question extends Database{
         catch(Exception $e){
             echo $e->getMessage();
             $pdo->rollBack();
+        }   
+    }
+    
+    public function isQuizActive($student_id){
+        try{
+            $pdo = self::connect();
+            $stmt = $pdo->prepare('SELECT qinstance_id from quiz_instance where student_id = ?');
+            $stmt->execute(array($student_id));
+            return ($stmt->fetch()) ? true : false;
         }
-        
+        catch(Exception $e){
+            return $e->getMessage();
+        }
+    }
+    
+    public function processQuiz($student_id){
+        try{
+            $pdo = self::connect();
+            //check if ainstance not yet initialized
+            //if not init, create all questions
+            //get next question
+            
+        }
+        catch(Exception $e){
+            
+        }
     }
 }

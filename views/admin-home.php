@@ -8,6 +8,9 @@
     <button class='btn btn-primary' role='button' data-toggle='modal' data-target='#add-class-modal'>ADD CLASS</button>
     <button class='btn btn-primary' role='button' data-toggle='modal' data-target='#generate-quiz-modal'>Start a Quiz</button>
     <button class='btn btn-success' role='button' href='getAllQuiz'>Get All Quiz</button>
+    <?php
+        var_dump($_SESSION);
+    ?>
     <div class='row h-100'>
         <div class='container col-3' style='bg-color:#e3e3e3;'>
             <h4 class='display-4'>Class List</h4>

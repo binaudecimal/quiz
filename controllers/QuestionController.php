@@ -33,6 +33,14 @@ class QuestionController extends Controller{
                 
             if no quiz active, clean session first before throw back home
         */
+        self::setSession();
+        if(!isset($_SESSION['student_id'])){
+            echo 'Go back home!';
+        }
+        $student_id = $_SESSION['student_id'];
+        $question_model = new Question();
+        if(!$question_model->isQuizActive($student_id)) echo 'no active quiz';
+        $question_model->processQuiz($student_id);
     }
     
 }

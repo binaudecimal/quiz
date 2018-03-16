@@ -3,8 +3,11 @@
         header('Location: home');
         exit();
     });
+    Route::set('index', function(){
+        Controller::createView('index');
+    });
     Route::set('home', function(){
-    Controller::createView('index');
+    Controller::findHome();
     });
     Route::set('student', function(){
         Controller::createView('student-home');

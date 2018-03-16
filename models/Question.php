@@ -32,7 +32,7 @@ class Question extends Database{
             $pdo->beginTransaction();
             $questions = $stmt->fetchAll();
             foreach($students as $item){    
-                $stmt = $pdo->prepare('INSERT INTO quiz_instance (student_id, items, duration, region) values (?,?,?,?)');
+                $stmt = $pdo->prepare('INSERT INTO quiz_instance (student_id, items, duration, region, total_score) values (?,?,?,?, 0)');
                 $stmt->execute(array($item['student_id'], $items, $duration, $region));
             }
             $pdo->commit();
@@ -123,21 +123,23 @@ class Question extends Database{
             echo $e->getMessage();
         }
     }
-    public function processAnswer($answer, $question_id){
+    public function processAnswer($answer, $question_id, $student_id){
         try{
             $pdo = self::connect();
-            var_dump($answer);
-            $stmt = $pdo->prepare('SELECT answer_correct from questions where question_id = ?');
-            $stmt->execute(array($question_id));
-            $correct_answer = $stmt->fetch()['answer_correct'];
-            $pdo->beginTransaction();
+            $stmt = $pdo->prepare('SELECT quiz_instance.qinstance_id, questions.answer_correct from quiz_instance NATURAL JOIN questions WHERE quiz_instance.student_id = ? and questions.question_id = ?');
+            $stmt->execute(array($student_id, $question_id));
+            $datarow = $stmt->fetch();
             $score = 0;
-            if($answer == $correct_answer){
+            if($datarow['answer_correct'] == $answer){
                 $score = 1;
             }
-            //update scores
+            $pdo->beginTransaction();
+            $stmt = $pdo->prepare('UPDATE answer_instance NATURAL JOIN quiz_instance SET answer_instance.answer = ?, answer_instance.weighted_score = ?, quiz_instance.total_score = quiz_instance.total_score + ? WHERE quiz_instance.student_id = ? and answer_instance.question_id = ?');
+            $stmt->execute(array($answer, $score, $score, $student_id, $question_id));
+            $pdo->commit();
+            return true;
             
-            $commit();
+            //$commit();
         }
         catch(Exception $e){
             $pdo->rollBack();

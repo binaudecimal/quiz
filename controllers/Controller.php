@@ -20,5 +20,23 @@
 			print_r($umodel->getAllUsers());
 		}
         
+        public static function findHome(){
+            self::setSession();
+            $type = $_SESSION['type'];
+            switch($type){
+                case 'STUDENT': header('Location: student');
+                    exit();
+                    break;
+                case 'TEACHER': header('Location: teacher');
+                    exit();
+                    break;
+                case 'ADMIN': header('Location: admin');
+                    exit();
+                    break;
+                default: header('Location: index');
+                    exit();
+                    break;
+            }
+        }
 	}
 ?>

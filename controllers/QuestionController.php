@@ -37,7 +37,7 @@ class QuestionController extends Controller{
         if(!$quiz) echo 'No quiz is active!';
         $next_question = $question_model->processQuiz($student_id, $quiz['qinstance_id'], $quiz['region'], $quiz['items']);
         if(!$question_model->processQuiz($student_id, $quiz['qinstance_id'], $quiz['region'], $quiz['items'])){
-            header('Location: student?status=quizStart-failed');
+            header('Location: student?status=quiz-allComplete');
             exit();
         }
         else{
@@ -45,7 +45,6 @@ class QuestionController extends Controller{
             header('Location: quiz-take');
             exit();
         }
-
         
     }
     
@@ -59,8 +58,12 @@ class QuestionController extends Controller{
         self::setSession();
         $answer = $_POST['answer-value'];
         $question_id = $_SESSION['question_id'];
+        $student_id = $_SESSION['student_id'];
         $question_model = new Question();
-        $question_model->processAnswer($answer, $question_id);
+        $question_model->processAnswer($answer, $question_id, $student_id);
+        header('Location: quiz-start');
+        exit();
+        
     }
     
 }

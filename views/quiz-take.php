@@ -42,17 +42,14 @@
     });
     $('#answer-button2').click(function(){
             $('#hidden-answer').val($(this).val());
-            alert($('#hidden-answer').val());
             $('#answer-form').submit();
         });
     $('#answer-button3').click(function(){
             $('#hidden-answer').val($(this).val());
-            alert($('#hidden-answer').val());
             $('#answer-form').submit();
         });
     $('#answer-button4').click(function(){
             $('#hidden-answer').val($(this).val());
-            alert($('#hidden-answer').val());
             $('#answer-form').submit();
         });
 </script>

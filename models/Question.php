@@ -47,7 +47,7 @@ class Question extends Database{
     public function isQuizActive($student_id){
         try{
             $pdo = self::connect();
-            $stmt = $pdo->prepare('SELECT * from quiz_instance where student_id = ?');
+            $stmt = $pdo->prepare('SELECT * from quiz_instance where student_id = ? and date_finished is NULL');
             $stmt->execute(array($student_id));
             return ($quiz = $stmt->fetch()) ? array('qinstance_id'=>$quiz['qinstance_id'], 'region'=>$quiz['region'], 'items'=>$quiz['items']) : false;
         }
@@ -65,7 +65,7 @@ class Question extends Database{
             $stmt = $pdo->prepare('SELECT * FROM answer_instance where qinstance_id = ?');
             $stmt->execute(array($qinstance_id));
             if(!$stmt->fetch()){
-                $stmt = $pdo->prepare('SELECT * FROM questions where region= :region ORDER BY RAND() limit :limit ');
+                $stmt = $pdo->prepare('SELECT * FROM questions where region= :region  and status = 1 ORDER BY RAND() limit :limit ');
                 $stmt->bindParam(':region', $region, PDO::PARAM_STR);
                 $stmt->bindParam(':limit', $items, PDO::PARAM_INT);
                 $stmt->execute();
@@ -143,6 +143,39 @@ class Question extends Database{
         }
         catch(Exception $e){
             $pdo->rollBack();
+            return false;
+        }
+    }
+    public function addQuestion($region, $question, $answer_correct, $answer_wrong1, $answer_wrong2,$answer_wrong3){
+        try{
+            $pdo = self::connect();
+            $pdo->beginTransaction();
+            $stmt = $pdo->prepare('INSERT INTO questions (region, question, answer_correct, answer_wrong1, answer_wrong2, answer_wrong3, status) VALUES (?,?,?,?,?,?,1)');
+            $stmt->execute(array($region, $question, $answer_correct, $answer_wrong1, $answer_wrong2,$answer_wrong3));
+            $pdo->commit();
+            return true;
+        }   
+        catch(Exception $e){
+            echo $e->getMessage();
+            $pdo->rollBack();
+            return false;
+        }
+    }
+    
+    public function getAllQuestionsByRegion(){
+        try{
+            $pdo = self::connect();
+            $stmt = $pdo->prepare('SELECT * FROM questions where status = 1');
+            $stmt->execute();
+            $question_per_region = array();
+            foreach($stmt->fetchAll() as $items){
+                $question_per_region[$items['region']][$items['question_id']] = $items;
+                array_push($question_per_region[$items['region']], $items);
+            }
+            return $question_per_region;
+        }
+        catch(Exception $e){
+            echo $e->getMessage();
             return false;
         }
     }

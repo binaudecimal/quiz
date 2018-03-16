@@ -63,6 +63,30 @@ class QuestionController extends Controller{
         $question_model->processAnswer($answer, $question_id, $student_id);
         header('Location: quiz-start');
         exit();
+    }
+    
+    public static function addQuestion(){
+        self::setSession();
+        $region = $_POST['region'];
+        $question = $_POST['question'];
+        $answer_correct = $_POST['answer_correct'];
+        $answer_wrong1 = $_POST['answer_wrong1'];
+        $answer_wrong2 = $_POST['answer_wrong2'];
+        $answer_wrong3 = $_POST['answer_wrong3'];
+        $question_model = new Question();
+        if($question_model->addQuestion($region, $question, $answer_correct, $answer_wrong1, $answer_wrong2,$answer_wrong3)){
+            header('Location: add-question?status=adding-successful');
+            exit();
+        }
+        else{
+            header('Location: add-question?status=adding-failed');
+            exit();
+        }
+    }
+    
+    public static function getAllQuestionsByRegion(){
+        $question_model = new Question();
+        return $question_model->getAllQuestionsByRegion();
         
     }
     

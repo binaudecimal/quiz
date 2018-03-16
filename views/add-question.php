@@ -7,7 +7,7 @@
             <h5 class='hero text-align-center'>Add Question</h5>
             <hr class='my-4'>
             <div class='container'>
-                <form>
+                <form action='add-question-submit' method='POST'>
                     <div class='form-group'>
                         <label for="region">Region</label>
                         <select class="form-control" id="region" name='region'>
@@ -46,8 +46,8 @@
                         <input class='form-control' type='text' placeholder='Answer 4 (Wrong)' name='answer_wrong3' id='answer_wrong3'>
 
                         <div class='container-fluid mt-3'>
-                            <button class='btn btn-primary'>SUBMIT</button>
-                            <button class='btn btn-secondary'>CANCEL</button>
+                            <button class='btn btn-primary' type='submit'>SUBMIT</button>
+                            <a class='btn btn-secondary' role='button' href='home'>CANCEL</a>>
                         </div>
                     </div>
                 </form>

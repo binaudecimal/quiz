@@ -27,6 +27,12 @@
     Route::set('add-question', function(){
         Controller::createView('add-question');
     });
+    Route::set('add-question-submit', function(){
+        QuestionController::addQuestion();
+    });
+    Route::set('get-all-questions', function(){
+        QuestionController::getAllQuestionsByRegion();
+    }); 
     Route::set('edit-question', function(){
         Controller::createView('edit-question');
     });

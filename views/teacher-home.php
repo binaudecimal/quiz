@@ -1,3 +1,8 @@
+<?php
+    $questions = QuestionController::getAllQuestionsByRegion();
+    $classes = SectionController::getAllClasses();
+?>
+
 <div class='container-fluid'>
     <div class='jumbotron h-100'>
         <div class='row justify-content-center'>
@@ -18,7 +23,7 @@
                             <a href="#" class="list-group-item list-group-item-action active" data-toggle="modal" data-target="#liveModal" role="button" id='live-modal-toggle'>Start a Quiz?</a>
                             <a href="#" class="list-group-item list-group-item-action">Class 2 Graphs</a>
                             <a href="#" class="list-group-item list-group-item-action">Question Analysis</a>
-                            <a href="#" class="list-group-item list-group-item-action">Student Statistics</a>
+                            <a href="#" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#issues-modal" role="button" id='issue-modal-toggle'>View Issues</a>
                         </div>
                     </div>
                 </div>
@@ -27,7 +32,7 @@
                         <div class='container-fluid h-100'>
                             <div class='card'>
                                 <div class='card-header'>
-                                    Chats
+                                    Graphs for Section
                                 </div>
                                 <div class='card-body'>
                                     <div class='container-fluid'>
@@ -51,47 +56,13 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            
-            
-            <div class='container w-75 h-100 float-left bg-light pt-3 pb-3'>
-                <div class='card'>
-                    <div class='card-header'>
-                        Issue # 100
-                    </div>
-                    <div class='card-body'>
-                        <p class='card-text'>
-                            Issue on {xxx} submitted by {someone}
-                        </p>
-                        <a class='btn btn-primary' role='btn' href='#'>Mark as resolved</a>
-                    </div>
-                </div>
-                
-                <div class='card'>
-                    <div class='card-header'>
-                        Issue # 101
-                    </div>
-                    <div class='card-body'>
-                        <p class='card-text'>
-                            Issue on {xxx1} submitted by {someone1}
-                        </p>
-                        <a class='btn btn-primary' role='btn' href='#'>Mark as resolved</a>
-                    </div>
-                </div>
-                
-                <div class='card'>
-                    <div class='card-header'>
-                        Issue # 100
-                    </div>
-                    <div class='card-body'>
-                        <p class='card-text'>
-                            Issue on {xxx2} submitted by {someone2}
-                        </p>
-                        <a class='btn btn-primary' role='btn' href='#'>Mark as resolved</a>
+                    <div class='container float-left'>
+                        <canvas id='class-chart'>Browser does not support html5</canvas>
                     </div>
                 </div>
             </div>
+            
+                
         </div>
     </div>
     
@@ -176,10 +147,81 @@
     </div>
 </div>
 
+<!--start of modal for questions -->
+<div class='modal fade' id='edit-question-modal'>
+    <div class='modal-dialog'>
+        <div class='modal-content'>
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Questions List (EDIT)</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class='modal-content'>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<!--end of modal for questions-->
+
+<!-- start of issues modal-->
+<div class='modal fade' id='issues-modal'>
+    <div class='modal-dialog'>
+        <div class='modal-content'>
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Currently Posted Issues</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class='modal-content'>
+                <div class='container'>
+                    <!--start of issues-->
+                <div class='container'>
+                    <div class='card'>
+                        <div class='card-header'>
+                            Issue # 100
+                        </div>
+                        <div class='card-body'>
+                            <p class='card-text'>
+                                Issue on {xxx} submitted by {someone}
+                            </p>
+                            <a class='btn btn-primary' role='btn' href='#'>Mark as resolved</a>
+                        </div>
+                    </div>
+
+                    <div class='card'>
+                        <div class='card-header'>
+                            Issue # 101
+                        </div>
+                        <div class='card-body'>
+                            <p class='card-text'>
+                                Issue on {xxx1} submitted by {someone1}
+                            </p>
+                            <a class='btn btn-primary' role='btn' href='#'>Mark as resolved</a>
+                        </div>
+                    </div>
+
+                    <div class='card'>
+                        <div class='card-header'>
+                            Issue # 100
+                        </div>
+                        <div class='card-body'>
+                            <p class='card-text'>
+                                Issue on {xxx2} submitted by {someone2}
+                            </p>
+                            <a class='btn btn-primary' role='btn' href='#'>Mark as resolved</a>
+                        </div>
+                    </div>
+                </div>
+                <!--end of issues-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end of issues modal-->
 <script>
-    /*
-    $('#live-modal-toggle').click(function(){
-        $('#live-modal-text').append('I am clicked!');
-    });
-    */
+    
 </script>

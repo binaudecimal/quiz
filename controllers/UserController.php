@@ -32,7 +32,6 @@ class UserController extends Controller{
             }
             //successful login, update session ID
             if($user_model->updateSession($user)){
-                var_dump($_SESSION);
                 header('Location: home?status=login-successful');
                 exit();
             }

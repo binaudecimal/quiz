@@ -104,6 +104,12 @@ class User extends Database{
             $_SESSION['last'] = $user['last'];
             $_SESSION['type'] = $user['type'];
             $_SESSION['session_id'] = $session_id;
+            if($user['type'] == 'STUDENT'){
+                $stmt = $pdo->prepare('SELECT student_id FROM students where user_id = ?');
+                $stmt->execute(array(user['user_id']));
+                $student_obj = $stmt->fetch();
+                $_SESSION['student_id'] = $student_obj['student_id'];
+            }
             return true;
         }
         catch(Exception $e){

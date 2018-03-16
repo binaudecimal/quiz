@@ -39,4 +39,11 @@
     Route::set('logout', function(){
         UserController::logout();
     });
+    //Quizzes
+    Route::set('getAllQuiz', function(){
+        QuestionController::getAllQuiz();
+    });
+    Route::set('generate-quiz', function(){
+        QuestionController::generateQuiz();
+    });
 ?>

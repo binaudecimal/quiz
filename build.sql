@@ -51,20 +51,15 @@ CREATE TABLE questions(
     status boolean not null
 );
 
-CREATE TABLE quiz_reports(
-  qreport_id int(11) not null AUTO_INCREMENT PRIMARY KEY,
-    student_id int(11) not null,
-    FOREIGN KEY(student_id) REFERENCES users(user_id)
-);
-
 CREATE TABLE quiz_instance(
 	qinstance_id int(11) not null AUTO_INCREMENT PRIMARY KEY,
-    qreport_id int(11) not null,
+    student_id int(11) not null,
     items int(10) not null,
     duration int(10) not null,
     region varchar(25) not null,
     total_score float,
-    date_finished datetime
+    date_finished datetime,
+    FOREIGN KEY (student_id) REFERENCES students(student_id)
 );
 
 CREATE TABLE answer_instance(
@@ -72,5 +67,7 @@ CREATE TABLE answer_instance(
     qinstance_id Int(11) not null,
     question_id int(11) not null,
     answer varchar(255),
-    weighted_score float
+    weighted_score float,
+    FOREIGN KEY (qinstance_id) REFERENCES quiz_instance(qinstance_id),
+    FOREIGN KEY (question_id) REFERENCES questions(question_id)
 );

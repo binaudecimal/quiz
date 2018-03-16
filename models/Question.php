@@ -51,7 +51,6 @@ class Question extends Database{
                 $stmt = $pdo->prepare('INSERT INTO quiz_instance (student_id, items, duration, region) values (?,?,?,?)');
                 $stmt->execute(array($item['student_id'], $items, $duration, $region));
             }
-            
             $pdo->commit();
             return true;
         }

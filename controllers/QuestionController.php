@@ -26,4 +26,13 @@ class QuestionController extends Controller{
         }
     }
     
+    public static function startQuiz(){
+        //check for student ID
+        /*
+            if quiz active, get next question
+                
+            if no quiz active, clean session first before throw back home
+        */
+    }
+    
 }

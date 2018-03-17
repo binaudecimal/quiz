@@ -65,11 +65,11 @@ class UserController extends Controller{
         $type = $_POST['type'];
         $class = $_POST['class'];
         if(empty($username) || empty($password) || empty($first) || empty($last) || empty($type)){
-            header('Location: signup?status=form-incomplete');
+            header('Location: teacher?status=form-incomplete');
             exit();
         }
         if($type =='STUDENT' && empty($class)){
-            header('Location: signup?status=classfield-empty');
+            header('Location: teacher?status=classfield-empty');
             exit();
         }
         //check if user exists
@@ -80,7 +80,7 @@ class UserController extends Controller{
         
         if($user){
             //user already taken
-            header('Location: signup?status=username-taken');
+            header('Location: teacher?status=username-taken');
             exit();
         }
         
@@ -93,12 +93,13 @@ class UserController extends Controller{
             }
         
         if(!$status){
-            header('Loation: signup?status=error');
+            header('Loation: teacher?status=error');
             exit();
         }
         //var_dump($_POST);
-        header('Location: signup?status=signup-success');
+        header('Location: teacher?status=signup-success');
         exit();
     }
+    
 }
 ?>

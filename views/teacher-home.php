@@ -1,15 +1,40 @@
 <?php
     $questions = QuestionController::getAllQuestionsByRegion();
     $classes = SectionController::getAllClasses();
+    Controller::setSession();
+    if($_SESSION['type']!= 'TEACHER'){
+        header('Location: home');
+        exit();
+    }
 ?>
 
 <div class='container-fluid'>
     <div class='jumbotron h-100'>
         <div class='row justify-content-center'>
             <div class='container'>
-                <div class="alert alert-success" role="alert">
-                      Status goes here
-                </div>
+                <!-- status starts -->
+                <?php
+                    if(isset($_GET['status'])){
+                        $status = $_GET['status'];
+                        switch($status){
+                            case 'startQuiz-failed':
+                                echo "
+                                    <div class='alert alert-danger'>Error generating the quiz. Contact admin.</div>
+                                ";break;
+                            case 'startQuiz-success': echo "
+                                <div class='alert alert-success'>Quiz successfully started.</div>
+                            ";break;
+                                
+                            case 'adding-successful': echo "
+                                <div class='alert alert-success'>Question Successfully added.</div>
+                            ";break;
+                            case 'adding-failed' : echo "
+                                <div class='alert alert-danger'>Failed to add question. Contact admin.</div>
+                            ";break;
+                        }
+                    }
+                ?>
+                <!--status end-->
             </div>
         </div>
         <div class='container-fluid'>
@@ -20,10 +45,11 @@
                     <div class='container-fluid h-100 w-100'>
                         <h5 class='display-5'>Sidebar</h5>
                         <div class='list-group'>
-                            <a href="#" class="list-group-item list-group-item-action active" data-toggle="modal" data-target="#liveModal" role="button" id='live-modal-toggle'>Start a Quiz?</a>
-                            <a href="#" class="list-group-item list-group-item-action">Class 2 Graphs</a>
-                            <a href="#" class="list-group-item list-group-item-action">Question Analysis</a>
-                            <a href="#" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#issues-modal" role="button" id='issue-modal-toggle'>View Issues</a>
+                            <a href="#" class="list-group-item list-group-item-action list-group-item-primary" data-toggle="modal" data-target="#liveModal" role="button" id='live-modal-toggle'>Start a Quiz?</a>
+                            <a href="#" class="list-group-item list-group-item-action list-group-item-secondary" data-toggle="modal" data-target="#add-question-modal" role="button" id='add-question-toggle'>Add Question</a>
+                            <a href="#" class="list-group-item list-group-item-action list-group-item-secondary" data-toggle="modal" data-target="#edit-question-modal" role="button" id='edit-question-toggle'>Edit Question</a>
+                            <a href="#" class="list-group-item list-group-item-action list-group-item-dark"  data-toggle="modal" data-target="#enroll-student-modal" role="button" id='enroll-student-modal-toggle'>Enroll a Student</a>
+                            <a href="#" class="list-group-item list-group-item-action list-group-item-info" data-toggle="modal" data-target="#issues-modal" role="button" id='issue-modal-toggle'>View Issues</a>
                         </div>
                     </div>
                 </div>
@@ -52,27 +78,6 @@
         </div>
     </div>
     
-     
-    
-    <!-- bottom nav-bar-->
-    <nav class='navbar fixed-bottom navbar-light bg-light navbar-expand-lg'>
-        <ul class='navbar-nav mr-auto'>
-            <li class='nav-item'>
-                <a class='nav-link' href='#'>
-                    Toggle Sidebar
-                </a>
-            </li>
-        </ul>
-        <ul class='navbar-nav ml-auto'>
-            <li class='nav-item'>
-                <a class='nav-link' href='add-question'>Add Question</a>
-            </li>
-            <li class='nav-item'>
-                <a class='nav-link' href='#' data-toggle='modal' data-target='#edit-question-modal'>Edit Question</a>
-            </li>
-        </ul>
-    </nav>
-</div>
 
 <!--popup sections -->
 
@@ -85,48 +90,56 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class='modal-content'>
+            <div class='modal-body'>
                 <div class='container'>
-                    <div class='form-group'>
-                        <form>
-                            <label for='quiz-section'>Section</label>
-                            <select class="form-control" id="quiz-section" name='section'>
-                                <option value='class1'>6-BATIBOT</option>
-                                <option value='class1'>6-SESAME</option>
-                            </select>
-                            
-                            <label for="region">Region</label>
-                            <select class="form-control" id="region" name='region'>
-                                <option value='ncr'>National Capital Region (NCR)</option>
-                                <option value='region1'>Ilocos Region (Region 1)</option>
-                                <option value='car'>Cordillera Administrative Region (CAR)</option>
-                                <option value='region2'>Cagayan Valley (Region 2)</option>
-                                <option value='region3'>Central Luzon (Region 3)</option>
-                                <option value='region4a'>CALABARZON (Region 4A)</option>
-                                <option value='mimaropa'>Southwestern Tagalog Region (MIMAROPA)</option>
-                                <option value='region5'>Bicol Region (Region 5)</option>
-                                <option value='region6'>Western Visayas (Region 6)</option>
-                                <option value='region7'>Central Visayas (Region 7)</option>
-                                <option value='region8'>Eastern Visayas (Region 8)</option>
-                                <option value='region9'>Zamboanga Peninsula (Region 9)</option>
-                                <option value='region10'>Northern Mindanao (Region 10)</option>
-                                <option value='region11'>Davao Region (Region 11)</option>
-                                <option value='region12'>SOCCSLSARGEN (Region 12)</option>
-                                <option value='region13'>Caraga Region (Region 13)</option>
-                                <option value='armm'>Autonomous Region in Muslim Mindanao (ARMM)</option>
-                            </select>
-                            
-                            <label for='quiz-duration'>Question Duration (seconds)</label>
-                            <input class='form-control' value='10' name='duration' id='quiz_duration'>
-
-                            <label for='quiz-items'>Items</label>
-                            <input class='form-control' value='10' name='duration' id='quiz_items'>
-                            <div class='container-fluid mt-3'>
-                                <button class='btn btn-primary'>Quiz Activate!</button>
-                                <button class='btn btn-secondary' data-dismiss='modal' aria-label='Cancel'>Cancel</button>
-                            </div>
-                        </form>
-                    </div>
+                    <form class='form-group' action='generate-quiz' method='POST'>
+                        <p class='lead'>
+                            You are about to start a new quiz for a selected Section. Please note that all unfinished quizzes will be automagically submitted and scored according to the student's progress. 
+                        </p>
+                        <label for='class-quiz'>For Section: </label>
+                        <select class='form-control' name='class_id' id='class-quiz'>
+                            <?php
+                                if($classes){
+                                    foreach($classes as $item){
+                                        echo "
+                                            <option value='".$item['class_id']."'>".$item['section_name']."</option>
+                                        ";
+                                    }
+                                }
+                            ?>
+                        </select>
+                        <label for='class-items'>Items: </label>
+                        <input class='form-control' name='items' id='class-items' placeholder='Number of Items'>
+                        
+                        <label for='class-duration'>Duration: </label>
+                        <input class='form-control' name='duration' id='class-duration' placeholder='Duration (seconds)'>
+                        
+                        <label for="class-region">Region</label>
+                        <select class="form-control" id="class-region" name='region'>
+                          <option value='ncr'>National Capital Region (NCR)</option>
+                            <option value='region1'>Ilocos Region (Region 1)</option>
+                            <option value='car'>Cordillera Administrative Region (CAR)</option>
+                            <option value='region2'>Cagayan Valley (Region 2)</option>
+                            <option value='region3'>Central Luzon (Region 3)</option>
+                            <option value='region4a'>CALABARZON (Region 4A)</option>
+                            <option value='mimaropa'>Southwestern Tagalog Region (MIMAROPA)</option>
+                            <option value='region5'>Bicol Region (Region 5)</option>
+                            <option value='region6'>Western Visayas (Region 6)</option>
+                            <option value='region7'>Central Visayas (Region 7)</option>
+                            <option value='region8'>Eastern Visayas (Region 8)</option>
+                            <option value='region9'>Zamboanga Peninsula (Region 9)</option>
+                            <option value='region10'>Northern Mindanao (Region 10)</option>
+                            <option value='region11'>Davao Region (Region 11)</option>
+                            <option value='region12'>SOCCSLSARGEN (Region 12)</option>
+                            <option value='region13'>Caraga Region (Region 13)</option>
+                            <option value='armm'>Autonomous Region in Muslim Mindanao (ARMM)</option>
+                        </select>
+                        
+                        <div class='container-fluid mt-3'>
+                            <button class='btn btn-primary' type='submit'>Submit</button>
+                            <button class='btn btn-secondary' role='button' data-dismiss='modal'>Cancel</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -292,6 +305,121 @@
     </div>
 </div>
 <!--end of issues modal-->
-<script>
     
-</script>
+<!-- add question modal start-->
+    <div class='modal fade' id='add-question-modal'>
+    <div class='modal-dialog modal-lg'>
+        <div class='modal-content'>
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Currently Posted Issues</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class='modal-content'>
+                <div class='container'>
+            <h5 class='hero text-align-center'>Add Question</h5>
+            <hr class='my-4'>
+            <div class='container'>
+                <form action='add-question-submit' method='POST'>
+                    <div class='form-group'>
+                        <label for="region">Region</label>
+                        <select class="form-control" id="region" name='region'>
+                          <option value='ncr'>National Capital Region (NCR)</option>
+                            <option value='region1'>Ilocos Region (Region 1)</option>
+                            <option value='car'>Cordillera Administrative Region (CAR)</option>
+                            <option value='region2'>Cagayan Valley (Region 2)</option>
+                            <option value='region3'>Central Luzon (Region 3)</option>
+                            <option value='region4a'>CALABARZON (Region 4A)</option>
+                            <option value='mimaropa'>Southwestern Tagalog Region (MIMAROPA)</option>
+                            <option value='region5'>Bicol Region (Region 5)</option>
+                            <option value='region6'>Western Visayas (Region 6)</option>
+                            <option value='region7'>Central Visayas (Region 7)</option>
+                            <option value='region8'>Eastern Visayas (Region 8)</option>
+                            <option value='region9'>Zamboanga Peninsula (Region 9)</option>
+                            <option value='region10'>Northern Mindanao (Region 10)</option>
+                            <option value='region11'>Davao Region (Region 11)</option>
+                            <option value='region12'>SOCCSLSARGEN (Region 12)</option>
+                            <option value='region13'>Caraga Region (Region 13)</option>
+                            <option value='armm'>Autonomous Region in Muslim Mindanao (ARMM)</option>
+                        </select>
+
+                        <label for="question">Question</label>
+                        <input class='form-control' type='text' placeholder='Question' name='question' id='question' required>
+
+                        <label for="answer_correct">Answer 1 (Correct)</label>
+                        <input class='form-control' type='text' placeholder='Answer 1 (Correct)' name='answer_correct' id='answer_correct' required>
+
+                        <label for="answer_wrong1">Answer 2 (Wrong)</label>
+                        <input class='form-control' type='text' placeholder='Answer 2 (Wrong)' name='answer_wrong1' id='answer_wrong1' required>
+
+                        <label for="answer_wrong2">Answer 3 (Wrong)</label>
+                        <input class='form-control' type='text' placeholder='Answer 3 (Wrong)' name='answer_wrong2' id='answer_wrong2' required>
+
+                        <label for="answer_wrong3">Answer 4 (Wrong)</label>
+                        <input class='form-control' type='text' placeholder='Answer 4 (Wrong)' name='answer_wrong3' id='answer_wrong3' required>
+
+                        <div class='container-fluid mt-3'>
+                            <button class='btn btn-primary' type='submit'>SUBMIT</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">CANCEL</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- add question modal end-->
+
+<!-- start of enroll student modal-->
+<div class='modal fade' id='enroll-student-modal'>
+    <div class='modal-dialog modal-lg'>
+        <div class='modal-content'>
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Enroll a Student</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class='modal-content'>
+                <div class='container'>
+                    <form action='signup-submit' method='POST'>
+                        <div class='form-group'>
+                            <label for="first">First Name</label>
+                            <input class='form-control' type='text' placeholder='First Name' name='first' id='first' required>
+                            <label for="last">Last Name</label>
+                            <input class='form-control' type='text' placeholder='Last Name' name='last' id='last' required>
+                            <label for="username">Username</label>
+                            <input class='form-control' type='text' placeholder='Username' name='username' id='username' required>
+                            <label for="password">Password</label>
+                            <input class='form-control' type='password' placeholder='Password' name='password' id='password' required>
+                            <input type='hidden' name='type' value='STUDENT'>
+                            <div id='additional-form'>
+                                <label for="class">Class</label>
+                                <select class="form-control" id="class" name='class'>
+                                    <?php
+                                        $classes = SectionController::getAllClasses();
+                                        foreach($classes as $item){
+                                            echo "
+                                                <option value='".$item['class_id']."'>
+                                                    ".$item['section_name']."
+                                                </option>
+                                            ";
+                                        }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class='container-fluid mt-3'>
+                                <button class='btn btn-primary'>SUBMIT</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">CANCEL</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end of enroll student modal-->

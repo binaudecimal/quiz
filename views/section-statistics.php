@@ -2,7 +2,7 @@
     $stat = StatController::getScoresPerSectionPerRegion();
 ?>
 
-<div class='container-fluid'>
+<div class='container-fluid mt-5 pt-3'>
     <ul class='nav nav-tabs'>
         <li class='nav-item'>
             <a href='#ncr' class='nav-link' data-toggle='tab'>NCR</a>

@@ -49,7 +49,7 @@ class Question extends Database{
             $pdo = self::connect();
             $stmt = $pdo->prepare('SELECT * from quiz_instance where student_id = ? and date_finished is NULL');
             $stmt->execute(array($student_id));
-            return ($quiz = $stmt->fetch()) ? array('qinstance_id'=>$quiz['qinstance_id'], 'region'=>$quiz['region'], 'items'=>$quiz['items']) : false;
+            return ($quiz = $stmt->fetch()) ? array('qinstance_id'=>$quiz['qinstance_id'], 'region'=>$quiz['region'], 'items'=>$quiz['items'], 'duration'=>$quiz['duration']) : false;
         }
         catch(Exception $e){
             return $e->getMessage();
@@ -183,10 +183,22 @@ class Question extends Database{
         try{
             $pdo = self::connect();
             $stmt = $pdo->prepare('SELECT * from questions where question_id = ?');
-            $stmt->execute(array($question_id));
-            $question = $stmt->fetch();
-            if(!$question) return false;
-            return $question;
+            
+        }
+        catch(Exception $e){
+            echo $e->getMessage();
+            return false;
+        }
+    }
+    
+    public function getQuestionNumber($qinstance_id){
+        try{
+            $pdo = self::connect();
+            $stmt = $pdo->prepare('SELECT COUNT(*) FROM answer_instance WHERE qinstance_id = ? and answer is NOT NULL');
+            $stmt->execute(array($qinstance_id));
+            $number = intval($stmt->fetch()['COUNT(*)']);
+            return $number+1;
+            
         }
         catch(Exception $e){
             echo $e->getMessage();

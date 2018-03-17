@@ -12,19 +12,10 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         
         <div class='container-fluid'>
-                    <nav class='navbar navbar-expand-lg navbar-dark bg-primary'>
+                    <nav class='navbar navbar-expand-lg navbar-dark bg-primary fixed-top'>
 					 <a class="navbar-brand" href="home">Home</a>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ml-auto">
-                            <li class='nav-item'>
-                                <a class='nav-link' href='student'>STUDENT</a>
-                            </li>
-                            <li class='nav-item'>
-                                <a class='nav-link' href='teacher'>TEACHER</a>
-                            </li> 
-                            <li class='nav-item'>
-                                <a class='nav-link' href='admin'>ADMIN</a>
-                            </li> 
                             <?php
                                 if(!isset($_SESSION['username']) || !isset($_SESSION['session_id'])){
                                     echo "
@@ -43,6 +34,9 @@
                                 }
                             else{
                                 echo "
+                                    <span class='navbar-text pr-5'>
+                                        Welcome ".$_SESSION['first']." ".$_SESSION['last']."
+                                    </span>
                                     <li class='nav-item'>
                                         <a class='btn btn-light' role='button' name='logout-submit' href='logout'>LOGOUT</a>
                                     </li>

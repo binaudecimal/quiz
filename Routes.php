@@ -64,6 +64,8 @@
     Route::set('section-statistics', function(){
         Controller::createView('section-statistics');
     });
-
+    Route::set('enroll-submit', function(){
+        UserController::enrollSubmit();
+    });
     
 ?>

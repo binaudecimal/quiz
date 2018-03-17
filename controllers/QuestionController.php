@@ -21,7 +21,14 @@ class QuestionController extends Controller{
             $region = $_POST['region'];
             
             $question_model = new Question();
-            var_dump($question_model->generateQuiz($class_id, $items, $duration, $region));
+            if(!$question_model->generateQuiz($class_id, $items, $duration, $region)){
+                header('Location: teacher?status=startQuiz-failed');
+                exit();
+            }
+            else{
+                header('Location: teacher?status=startQuiz-success');
+                exit();
+            }
             
         }
     }
@@ -34,7 +41,10 @@ class QuestionController extends Controller{
         $student_id = $_SESSION['student_id'];
         $question_model = new Question();
         $quiz = $question_model->isQuizActive($student_id);
-        if(!$quiz) echo 'No quiz is active!';
+        if(!$quiz) {
+            header('Location: student?status=quiz-noActive');
+            exit();
+        }
         $next_question = $question_model->processQuiz($student_id, $quiz['qinstance_id'], $quiz['region'], $quiz['items']);
         if(!$question_model->processQuiz($student_id, $quiz['qinstance_id'], $quiz['region'], $quiz['items'])){
             header('Location: student?status=quiz-allComplete');
@@ -42,6 +52,8 @@ class QuestionController extends Controller{
         }
         else{
             $_SESSION['question_id'] = $next_question;
+            $_SESSION['qinstance_id'] = $quiz['qinstance_id'];
+            $_SESSION['duration'] = $quiz['duration'];
             header('Location: quiz-take');
             exit();
         }
@@ -75,11 +87,11 @@ class QuestionController extends Controller{
         $answer_wrong3 = $_POST['answer_wrong3'];
         $question_model = new Question();
         if($question_model->addQuestion($region, $question, $answer_correct, $answer_wrong1, $answer_wrong2,$answer_wrong3)){
-            header('Location: add-question?status=adding-successful');
+            header('Location: teacher?status=adding-successful');
             exit();
         }
         else{
-            header('Location: add-question?status=adding-failed');
+            header('Location: teacher?status=adding-failed');
             exit();
         }
     }
@@ -98,6 +110,13 @@ class QuestionController extends Controller{
             exit();
         }
         return $question_model->fetchQuestion($_GET['question_id']);
+    }
+    
+    public static function getQuestionNumber(){
+        self::setSession();
+        $question_model = new Question();
+        $qinstance_id = $_SESSION['qinstance_id'];
+        return $question_model->getQuestionNumber($qinstance_id);
     }
     
 }

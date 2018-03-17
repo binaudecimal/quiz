@@ -27,6 +27,16 @@ class StatController extends Controller{
         $question_id = $_GET['question_id'];
         $stat_model = new Stat();
         return $stat_model->getQuestionStat($question_id);
-        
+    }
+    
+    public static function getStudentQuizReport(){
+        if(!isset($_SESSION['student_id'])){
+            return array();
+        }
+        else{
+            $student_id = $_SESSION['student_id'];
+            $stat_model = new Stat();
+            return $stat_model->getStudentQuizReport($student_id);
+        }
     }
 }

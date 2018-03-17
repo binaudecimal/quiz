@@ -98,4 +98,19 @@ class Stat extends Database{
             return false;
         }
     }
+    
+    public function getStudentQuizReport($student_id){
+        try{
+            $pdo = self::connect();
+            $stmt = $pdo->prepare('SELECT * FROM quiz_instance WHERE student_id = ?');
+            $stmt->execute(array($student_id));
+            $quizzes = $stmt->fetchAll();
+            if(!$quizzes) return array();
+            return $quizzes;
+        }
+        catch(Exception $e){
+            echo $e->getMessage();
+            return array();
+        }
+    }
 }

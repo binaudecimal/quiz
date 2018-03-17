@@ -167,12 +167,26 @@ class Question extends Database{
             $pdo = self::connect();
             $stmt = $pdo->prepare('SELECT * FROM questions where status = 1');
             $stmt->execute();
-            $question_per_region = array();
+            $question_region = [];
             foreach($stmt->fetchAll() as $items){
-                $question_per_region[$items['region']][$items['question_id']] = $items;
-                array_push($question_per_region[$items['region']], $items);
+                $question_region[$items['region']][] = $items;
             }
-            return $question_per_region;
+            return $question_region;
+        }
+        catch(Exception $e){
+            echo $e->getMessage();
+            return false;
+        }
+    }
+    
+    public function fetchQuestion($question_id){
+        try{
+            $pdo = self::connect();
+            $stmt = $pdo->prepare('SELECT * from questions where question_id = ?');
+            $stmt->execute(array($question_id));
+            $question = $stmt->fetch();
+            if(!$question) return false;
+            return $question;
         }
         catch(Exception $e){
             echo $e->getMessage();

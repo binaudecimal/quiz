@@ -90,4 +90,14 @@ class QuestionController extends Controller{
         
     }
     
+    public static function fetchQuestion(){
+        self::setSession();
+        $question_model = new Question();
+        if(!isset($_GET['question_id'])){
+            header('Location: home');
+            exit();
+        }
+        return $question_model->fetchQuestion($_GET['question_id']);
+    }
+    
 }

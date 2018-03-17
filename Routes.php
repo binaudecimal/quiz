@@ -61,4 +61,9 @@
     Route::set('quiz-submit-answer', function(){
         QuestionController::processAnswer();
     });
+    Route::set('section-statistics', function(){
+        Controller::createView('section-statistics');
+    });
+
+    
 ?>

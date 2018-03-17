@@ -28,34 +28,20 @@
                     </div>
                 </div>
                 <div class='row h-50 w-100'>
-                    <div class='row h-50 w-100'>
+                    <div class='row h-100 w-100'>
                         <div class='container-fluid h-100'>
-                            <div class='card'>
-                                <div class='card-header'>
-                                    Graphs for Section
-                                </div>
-                                <div class='card-body'>
-                                    <div class='container-fluid'>
-                                        <!-- chat contents here -->
-                                    </div>
-                                </div>
+                            <h5 class='display-5'>View Statistics</h5>
+                            <div class='list-group'>
+                                <?php
+                                    foreach($classes as $item){
+                                        echo "
+                                            <a href='section-statistics?section=".$item['section_name']."' class='list-group-item list-group-item-action'>".$item['section_name']."</a>
+                                        ";
+                                    }
+                                ?>
                             </div>
                         </div>
                     </div>  
-                    <div class='row h-50 w-100'>
-                        <div class='container-fluid h-100'>
-                            <div class='card'>
-                                <div class='card-header'>
-                                    Logs
-                                </div>
-                                <div class='card-body'>
-                                    <div class='container-fluid'>
-                                        <!-- logs contents here -->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class='container float-left'>
                         <canvas id='class-chart'>Browser does not support html5</canvas>
                     </div>
@@ -82,7 +68,7 @@
                 <a class='nav-link' href='add-question'>Add Question</a>
             </li>
             <li class='nav-item'>
-                <a class='nav-link' href='edit-question'>Edit Question</a>
+                <a class='nav-link' href='#' data-toggle='modal' data-target='#edit-question-modal'>Edit Question</a>
             </li>
         </ul>
     </nav>
@@ -149,7 +135,7 @@
 
 <!--start of modal for questions -->
 <div class='modal fade' id='edit-question-modal'>
-    <div class='modal-dialog'>
+    <div class='modal-dialog modal-lg'>
         <div class='modal-content'>
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Questions List (EDIT)</h5>
@@ -158,7 +144,91 @@
                 </button>
             </div>
             <div class='modal-content'>
-                
+                <div class='modal-body mx-auto mw-100'>
+                    <ul class='nav nav-tabs'>
+                        <li class='nav-item'>
+                            <a href='#ncr' class='nav-link' data-toggle='tab'>NCR</a>
+                        </li>
+                        <li class='nav-item'>
+                            <a href='#region1' class='nav-link' data-toggle='tab'>Region 1</a>
+                        </li>
+                        <li class='nav-item'>
+                            <a href='#car' class='nav-link' data-toggle='tab'>CAR</a>
+                        </li>
+                        <li class='nav-item'>
+                            <a href='#region2' class='nav-link' data-toggle='tab'>Region 2</a>
+                        </li>
+                        <li class='nav-item'>
+                            <a href='#region3' class='nav-link' data-toggle='tab'>Region 3</a>
+                        </li>
+                        <li class='nav-item'>
+                            <a href='#region4a' class='nav-link' data-toggle='tab'>Region 4A</a>
+                        </li>
+                        <li class='nav-item'>
+                            <a href='mimaropa' class='nav-link' data-toggle='tab'>MIMAROPA</a>
+                        </li>
+                        <li class='nav-item'>
+                            <a href='#region5' class='nav-link' data-toggle='tab'>Region 5</a>
+                        </li>
+                        <li class='nav-item'>
+                            <a href='#region6' class='nav-link' data-toggle='tab'>Region 6</a>
+                        </li>
+                        <li class='nav-item'>
+                            <a href='#region7' class='nav-link' data-toggle='tab'>Region 7</a>
+                        </li>
+                        <li class='nav-item'>
+                            <a href='#region8' class='nav-link' data-toggle='tab'>Region 8</a>
+                        </li>
+                        <li class='nav-item'>
+                            <a href='#region9' class='nav-link' data-toggle='tab'>Region 9</a>
+                        </li>
+                        <li class='nav-item'>
+                            <a href='#region10' class='nav-link' data-toggle='tab'>Region 10</a>
+                        </li>
+                        <li class='nav-item'>
+                            <a href='#region11' class='nav-link' data-toggle='tab'>Region 11</a>
+                        </li>
+                        <li class='nav-item'>
+                            <a href='#region12' class='nav-link' data-toggle='tab'>Region 12</a>
+                        </li>
+                        <li class='nav-item'>
+                            <a href='#region13' class='nav-link' data-toggle='tab'>Region 13</a>
+                        </li>
+                        <li class='nav-item'>
+                            <a href='#armm' class='nav-link' data-toggle='tab'>ARMM</a>
+                        </li>
+                        <div class='tab-content'>
+                            <div role='tabpanel' class='tab-pane' id='ncr'>
+                                <table class='table'>
+                                    <thead>
+                                        <th scope='col'>Question ID</th>
+                                        <th scope='col'>Question</th>
+                                        <th scope='col'>Correct Answer</th>
+                                        <th scope='col'>Wrong Answer 1</th>
+                                        <th scope='col'>Wrong Answer 2</th>
+                                        <th scope='col'>Wrong Answer 3</th>
+                                        <th scope='col'>View Page</th>
+                                    </thead>
+                                    <?php
+                                        foreach($questions['ncr'] as $item){
+                                            echo "
+                                                <tr>
+                                                  <th scope='row'>".$item['question_id']."</th>
+                                                  <td>".$item['question']."</td>
+                                                  <td>".$item['answer_correct']."</td>
+                                                  <td>".$item['answer_wrong1']."</td>
+                                                  <td>".$item['answer_wrong3']."</td>
+                                                  <td>".$item['answer_wrong2']."</td>
+                                                  <td><a class='btn btn-primary' role='button' href='edit-question?question_id=".$item['question_id']."'>Edit</td>
+                                                </tr>
+                                            ";
+                                        }
+                                    ?>
+                                </table>
+                            </div>
+                        </div>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

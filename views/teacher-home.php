@@ -6,6 +6,7 @@
         header('Location: home');
         exit();
     }
+    $issues = IssueController::getAllIssues();
 ?>
 
 <div class='container-fluid'>
@@ -269,30 +270,6 @@
                         <div class='card-body'>
                             <p class='card-text'>
                                 Issue on {xxx} submitted by {someone}
-                            </p>
-                            <a class='btn btn-primary' role='btn' href='#'>Mark as resolved</a>
-                        </div>
-                    </div>
-
-                    <div class='card'>
-                        <div class='card-header'>
-                            Issue # 101
-                        </div>
-                        <div class='card-body'>
-                            <p class='card-text'>
-                                Issue on {xxx1} submitted by {someone1}
-                            </p>
-                            <a class='btn btn-primary' role='btn' href='#'>Mark as resolved</a>
-                        </div>
-                    </div>
-
-                    <div class='card'>
-                        <div class='card-header'>
-                            Issue # 100
-                        </div>
-                        <div class='card-body'>
-                            <p class='card-text'>
-                                Issue on {xxx2} submitted by {someone2}
                             </p>
                             <a class='btn btn-primary' role='btn' href='#'>Mark as resolved</a>
                         </div>

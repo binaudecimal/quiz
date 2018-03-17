@@ -48,6 +48,7 @@ CREATE TABLE questions(
     answer_wrong2 varchar(255) not null,
     answer_wrong3 varchar(255) not null,
     region varchar(255) not null,
+    explanation varchar(255),
     status boolean not null
 );
 

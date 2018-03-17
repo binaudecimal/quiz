@@ -32,6 +32,8 @@
                         <div class='list-group'>
                             <a href="quiz-start" class="list-group-item list-group-item-action list-group-item-primary" role="button">Start Quiz</a>
                             <a href="#" class="list-group-item list-group-item-action list-group-item-info" data-toggle="modal" data-target="#quiz-review-modal" role="button">Review Quizzes</a>
+                            <a href="#" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#issue-modal" role="button">Have Concerns? Message us!</a>
+                            
                         </div>
                     </div>
                 </div>
@@ -94,6 +96,34 @@
     </div>
 </div>
 <!--end of review modal-->
+
+<!-- start of issue modal -->
+<div class='modal fade' id='issue-modal'>
+    <div class='modal-dialog'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <h5 class='modal-title'>Voice your concerns</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class='modal-body'>
+                <p class='lead'>Wrong output? Missing fields? Things do what they aren't supposed to? You speak, we listen.</p>
+                <form class='form-group' action='issue-submit' method='POST'>
+                    <label for='#issue-header'>Header: </label>
+                    <input class='form-control' name='issue-header' id='issue-header' placeholder='What is it about?' required>
+                    <label for='#issue-body'>Body: </label>
+                    <textarea class='form-control' name='issue-body' id='issue_body' rows='5'></textarea>
+                    <span class='mt-3'>
+                        <button class='btn btn-primary' role='button' type='submit'>SUBMIT</button>
+                        <button class='btn btn-secondary' data-dismiss='modal'>CANCEL</button>
+                    </span>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end of issue modal-->
 <script>
     $('document').ready(function(){
         var ctx = document.getElementById('score').getContext('2d');

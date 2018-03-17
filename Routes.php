@@ -67,5 +67,8 @@
     Route::set('enroll-submit', function(){
         UserController::enrollSubmit();
     });
+    Route::set('issue-submit', function(){
+        IssueController::addIssue();
+    });
     
 ?>

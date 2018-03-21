@@ -70,5 +70,13 @@
     Route::set('issue-submit', function(){
         IssueController::addIssue();
     });
-    
+    Route::set('resolve-issue', function(){
+        IssueController::resolveIssue();
+    });
+    Route::set('question-delete', function(){
+        QuestionController::questionDelete();
+    });
+    Route::set('question-edit', function(){
+        QuestionController::questionEdit();
+    });
 ?>

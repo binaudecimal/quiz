@@ -1,6 +1,7 @@
 <?php
     $question = QuestionController::fetchQuestion();
     $graph_data = StatController::getQuestionStat();
+    
 ?>
 
 <div class='container-fluid'>
@@ -12,8 +13,9 @@
             <h5 class='hero text-align-center'>Edit Question</h5>
             <hr class='my-4'>
             <div class='container'>
-                <form>
+                <form action='question-edit' method='POST'>
                     <div class='form-group'>
+                        <input type='hidden' name='question_id' value='<?php echo $question['question_id']; ?>'>
                         <label for="region">Region</label>
                         <select class="form-control" id="region" name='region' value='<?php echo $question['region'];?>'>
                           <option value='ncr'>National Capital Region (NCR)</option>
@@ -53,7 +55,7 @@
                         <div class='container-fluid mt-3'>
                             <button class='btn btn-primary'>SUBMIT</button>
                             <button class='btn btn-secondary'>CANCEL</button>
-                            <button class='btn btn-danger float-right'>DELETE</button>
+                            <a class='btn btn-danger float-right' role='button' href='#' data-toggle='modal' data-target='#delete-modal'>DELETE</a>
                             
                         </div>
                         
@@ -67,6 +69,26 @@
                                                          <?php echo $graph_data; ?>);
                         </script>
                     </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class='modal fade' id='delete-modal'>
+    <div class='modal-dialog'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <h5 class='modal-title'>Delete this question</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class='modal-body'>
+                <p class='lead'>You are about to delete this question. This action is irreversible. The quizzes with that took this question will not receive a change.</p>
+                <form action='question-delete' method='POST'>
+                    <input type='hidden' name='question_id' value='<?php echo $question['question_id']; ?>'>
+                    <button class='btn btn-danger' type='submit'>CONFIRM DELETE</button>
+                    <button class='btn btn-secondary' role='button' data-dismiss='modal'>CANCEL</button>
                 </form>
             </div>
         </div>

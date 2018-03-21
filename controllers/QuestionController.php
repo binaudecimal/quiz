@@ -109,7 +109,9 @@ class QuestionController extends Controller{
             header('Location: home');
             exit();
         }
-        return $question_model->fetchQuestion($_GET['question_id']);
+        
+        $status = $question_model->fetchQuestion($_GET['question_id']);
+        return($status);
     }
     
     public static function getQuestionNumber(){
@@ -118,5 +120,40 @@ class QuestionController extends Controller{
         $qinstance_id = $_SESSION['qinstance_id'];
         return $question_model->getQuestionNumber($qinstance_id);
     }
+    public static function questionDelete(){
+        self::setSession();
+        $question_model = new Question();
+        $question_id = $_POST['question_id'];
+        $status=  $question_model->questionDelete($question_id);
+        
+        if(!$status){
+            header('Location: teacher?status=questionDelete-failed');
+            exit();
+        }
+        header('Location: teacher?status=questionDelete-success');
+        exit();     
+    }
     
+    public static function questionEdit(){
+        self::setSession();
+        $question_id = $_POST['question_id'];
+        $question = $_POST['question'];
+        $region = $_POST['region'];
+        $answer_correct = $_POST['answer_correct'];
+        $answer_wrong1 = $_POST['answer_wrong1'];
+        $answer_wrong2 = $_POST['answer_wrong2'];
+        $answer_wrong3 = $_POST['answer_wrong3'];
+        if(empty($question_id) || empty($question) || empty($region) || empty($answer_correct) || empty($answer_wrong1) || empty($answer_wrong2) || empty($answer_wrong3)){
+            header('Location: edit-question?status=field-incomplete');
+            exit();
+        }
+        $question_model = new Question();
+        $status = $question_model->questionEdit($question_id, $question, $region, $answer_correct, $answer_wrong1, $answer_wrong2, $answer_wrong3);
+        if(!$status){
+            header('Location: teacher?status=questionEdit-failed');
+            exit();
+        }
+        header('Location: teacher?status=questionEdit-success');
+        exit();  
+    }
 }

@@ -27,7 +27,7 @@ CREATE TABLE teachers(
 
 CREATE TABLE class(
 	class_id int(11) not null AUTO_INCREMENT PRIMARY KEY,
-    section_name varchar(255) not null,
+    section_name varchar(255) not null unique,
     teacher_id int(11) not null,
     FOREIGN KEY(teacher_id) REFERENCES teachers(teacher_id)
 );

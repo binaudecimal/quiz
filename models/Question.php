@@ -23,13 +23,17 @@ class Question extends Database{
     public function generateQuiz($class_id, $items, $duration, $region){
         try{
             $pdo = self::connect();
+            $pdo->beginTransaction();
+            $stmt = $pdo->prepare('UPDATE quiz_instance NATURAL JOIN students SET quiz_instance.date_finished = NOW() WHERE students.class_id = ?');
+            $stmt->execute(array($class_id));
+            
             $stmt = $pdo->prepare('SELECT students.student_id from students NATURAL JOIN class WHERE class.class_id = ?');
             $stmt->execute(array($class_id));
             $students = $stmt->fetchAll();
             if(!$students){
                 return false;
             }
-            $pdo->beginTransaction();
+            
             $questions = $stmt->fetchAll();
             foreach($students as $item){    
                 $stmt = $pdo->prepare('INSERT INTO quiz_instance (student_id, items, duration, region, total_score) values (?,?,?,?, 0)');
@@ -64,13 +68,14 @@ class Question extends Database{
             //get next question
             $stmt = $pdo->prepare('SELECT * FROM answer_instance where qinstance_id = ?');
             $stmt->execute(array($qinstance_id));
+            $pdo->beginTransaction();
             if(!$stmt->fetch()){
                 $stmt = $pdo->prepare('SELECT * FROM questions where region= :region  and status = 1 ORDER BY RAND() limit :limit ');
                 $stmt->bindParam(':region', $region, PDO::PARAM_STR);
                 $stmt->bindParam(':limit', $items, PDO::PARAM_INT);
                 $stmt->execute();
                 $questions = $stmt->fetchAll();
-                $pdo->beginTransaction();
+                
                 foreach($questions as $item){
                     $stmt = $pdo->prepare('INSERT INTO answer_instance (qinstance_id, question_id) values (?,?)');
                     $stmt->execute(array($qinstance_id, $item['question_id']));
@@ -183,7 +188,10 @@ class Question extends Database{
         try{
             $pdo = self::connect();
             $stmt = $pdo->prepare('SELECT * from questions where question_id = ?');
-            
+            $stmt->execute(array($question_id));
+            $question = $stmt->fetch();
+            if(!$question)return false;
+            return $question;
         }
         catch(Exception $e){
             echo $e->getMessage();
@@ -202,6 +210,38 @@ class Question extends Database{
         }
         catch(Exception $e){
             echo $e->getMessage();
+            return false;
+        }
+    }
+    
+    public function questionDelete($question_id){
+        try{
+            $pdo = self::connect();
+            $pdo->beginTransaction();
+            $stmt = $pdo->prepare('UPDATE questions SET status = 0 WHERE question_id = ?');
+            $stmt->execute(array($question_id));
+            $pdo->commit();
+            return true;
+        }
+        catch(Exception $e){
+            echo $e->getMessage();
+            $pdo->rollBack();
+            return false;
+        }
+    }
+    
+    public function questionEdit($question_id, $question, $region, $answer_correct, $answer_wrong1, $answer_wrong2, $answer_wrong3){
+        try{
+            $pdo = self::connect();
+            $pdo->beginTransaction();
+            $stmt = $pdo->prepare('UPDATE questions SET question = ?, region = ?, answer_correct = ?, answer_wrong1 = ?, answer_wrong2 = ?, answer_wrong3 = ?  WHERE question_id = ?');
+            $stmt->execute(array($question, $region, $answer_correct, $answer_wrong1, $answer_wrong2, $answer_wrong3, $question_id));
+            $pdo->commit();
+            return true;
+        }
+        catch(Exception $e){
+            echo $e->getMessage();
+            $pdo->rollBack();
             return false;
         }
     }

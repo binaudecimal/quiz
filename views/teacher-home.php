@@ -32,6 +32,24 @@
                             case 'adding-failed' : echo "
                                 <div class='alert alert-danger'>Failed to add question. Contact admin.</div>
                             ";break;
+                            case 'username-taken' : echo "
+                                <div class='alert alert-warning'>Username already taken.</div>
+                            ";break;
+                            case 'signup-success' : echo "
+                                <div class='alert alert-success'>Student successfully added.</div>
+                            ";break;
+                            case 'resolveIssue-success' : echo "
+                                <div class='alert alert-success'>Issue marked as resolved.</div>
+                            ";break;
+                            case 'resolveIssue-failed' : echo "
+                                <div class='alert alert-warning'>Failed to mark issue as resolved.</div>
+                            ";break;
+                            case 'questionDelete-failed' : echo "
+                                <div class='alert alert-warning'>Failed to delete question.</div>
+                            ";break;
+                            case 'questionDelete-success' : echo "
+                                <div class='alert alert-success'>Question deleted successfully.</div>
+                            ";break;
                         }
                     }
                 ?>
@@ -39,8 +57,6 @@
             </div>
         </div>
         <div class='container-fluid'>
-            
-            
             <div class='container-fluid w-25 h-100 float-left' style='bg-color:#efefef;'>
                 <div class='row h-50 w-100'>
                     <div class='container-fluid h-100 w-100'>
@@ -50,7 +66,6 @@
                             <a href="#" class="list-group-item list-group-item-action list-group-item-secondary" data-toggle="modal" data-target="#add-question-modal" role="button" id='add-question-toggle'>Add Question</a>
                             <a href="#" class="list-group-item list-group-item-action list-group-item-secondary" data-toggle="modal" data-target="#edit-question-modal" role="button" id='edit-question-toggle'>Edit Question</a>
                             <a href="#" class="list-group-item list-group-item-action list-group-item-dark"  data-toggle="modal" data-target="#enroll-student-modal" role="button" id='enroll-student-modal-toggle'>Enroll a Student</a>
-                            <a href="#" class="list-group-item list-group-item-action list-group-item-info" data-toggle="modal" data-target="#issues-modal" role="button" id='issue-modal-toggle'>View Issues</a>
                         </div>
                     </div>
                 </div>
@@ -74,7 +89,27 @@
                     </div>
                 </div>
             </div>
-            
+            <div class='container w-75 h-100'>
+                <?php
+                        foreach($issues as $item){
+                            echo "
+                                <div class='card'>
+                                    <div class='card-header'>
+                                        ".$item['issue_heading']."
+                                    </div>
+                                    <div class='card-body'>
+
+                                        <p class='card-text'>
+                                            ".$item['issue_body']."
+                                        </p>
+                                        <a class='btn btn-primary' role='btn' href='resolve-issue?issue_id=".$item['issue_id']."'>Mark as resolved</a>
+
+                                    </div>
+                                </div>
+                            ";
+                        }
+                    ?>
+            </div>
                 
         </div>
     </div>
@@ -179,7 +214,7 @@
                             <a href='#region4a' class='nav-link' data-toggle='tab'>Region 4A</a>
                         </li>
                         <li class='nav-item'>
-                            <a href='mimaropa' class='nav-link' data-toggle='tab'>MIMAROPA</a>
+                            <a href='#mimaropa' class='nav-link' data-toggle='tab'>MIMAROPA</a>
                         </li>
                         <li class='nav-item'>
                             <a href='#region5' class='nav-link' data-toggle='tab'>Region 5</a>
@@ -240,6 +275,454 @@
                                     ?>
                                 </table>
                             </div>
+                            <div role='tabpanel' class='tab-pane' id='region1'>
+                                <table class='table'>
+                                    <thead>
+                                        <th scope='col'>Question ID</th>
+                                        <th scope='col'>Question</th>
+                                        <th scope='col'>Correct Answer</th>
+                                        <th scope='col'>Wrong Answer 1</th>
+                                        <th scope='col'>Wrong Answer 2</th>
+                                        <th scope='col'>Wrong Answer 3</th>
+                                        <th scope='col'>View Page</th>
+                                    </thead>
+                                    <?php
+                                        foreach($questions['region1'] as $item){
+                                            echo "
+                                                <tr>
+                                                  <th scope='row'>".$item['question_id']."</th>
+                                                  <td>".$item['question']."</td>
+                                                  <td>".$item['answer_correct']."</td>
+                                                  <td>".$item['answer_wrong1']."</td>
+                                                  <td>".$item['answer_wrong3']."</td>
+                                                  <td>".$item['answer_wrong2']."</td>
+                                                  <td><a class='btn btn-primary' role='button' href='edit-question?question_id=".$item['question_id']."'>Edit</td>
+                                                </tr>
+                                            ";
+                                        }
+                                    ?>
+                                </table>
+                            </div>
+                            <div role='tabpanel' class='tab-pane' id='car'>
+                                <table class='table'>
+                                    <thead>
+                                        <th scope='col'>Question ID</th>
+                                        <th scope='col'>Question</th>
+                                        <th scope='col'>Correct Answer</th>
+                                        <th scope='col'>Wrong Answer 1</th>
+                                        <th scope='col'>Wrong Answer 2</th>
+                                        <th scope='col'>Wrong Answer 3</th>
+                                        <th scope='col'>View Page</th>
+                                    </thead>
+                                    <?php
+                                        foreach($questions['car'] as $item){
+                                            echo "
+                                                <tr>
+                                                  <th scope='row'>".$item['question_id']."</th>
+                                                  <td>".$item['question']."</td>
+                                                  <td>".$item['answer_correct']."</td>
+                                                  <td>".$item['answer_wrong1']."</td>
+                                                  <td>".$item['answer_wrong3']."</td>
+                                                  <td>".$item['answer_wrong2']."</td>
+                                                  <td><a class='btn btn-primary' role='button' href='edit-question?question_id=".$item['question_id']."'>Edit</td>
+                                                </tr>
+                                            ";
+                                        }
+                                    ?>
+                                </table>
+                            </div>
+                            <div role='tabpanel' class='tab-pane' id='region2'>
+                                <table class='table'>
+                                    <thead>
+                                        <th scope='col'>Question ID</th>
+                                        <th scope='col'>Question</th>
+                                        <th scope='col'>Correct Answer</th>
+                                        <th scope='col'>Wrong Answer 1</th>
+                                        <th scope='col'>Wrong Answer 2</th>
+                                        <th scope='col'>Wrong Answer 3</th>
+                                        <th scope='col'>View Page</th>
+                                    </thead>
+                                    <?php
+                                        foreach($questions['region2'] as $item){
+                                            echo "
+                                                <tr>
+                                                  <th scope='row'>".$item['question_id']."</th>
+                                                  <td>".$item['question']."</td>
+                                                  <td>".$item['answer_correct']."</td>
+                                                  <td>".$item['answer_wrong1']."</td>
+                                                  <td>".$item['answer_wrong3']."</td>
+                                                  <td>".$item['answer_wrong2']."</td>
+                                                  <td><a class='btn btn-primary' role='button' href='edit-question?question_id=".$item['question_id']."'>Edit</td>
+                                                </tr>
+                                            ";
+                                        }
+                                    ?>
+                                </table>
+                            </div>
+                            <div role='tabpanel' class='tab-pane' id='region3'>
+                                <table class='table'>
+                                    <thead>
+                                        <th scope='col'>Question ID</th>
+                                        <th scope='col'>Question</th>
+                                        <th scope='col'>Correct Answer</th>
+                                        <th scope='col'>Wrong Answer 1</th>
+                                        <th scope='col'>Wrong Answer 2</th>
+                                        <th scope='col'>Wrong Answer 3</th>
+                                        <th scope='col'>View Page</th>
+                                    </thead>
+                                    <?php
+                                        foreach($questions['region3'] as $item){
+                                            echo "
+                                                <tr>
+                                                  <th scope='row'>".$item['question_id']."</th>
+                                                  <td>".$item['question']."</td>
+                                                  <td>".$item['answer_correct']."</td>
+                                                  <td>".$item['answer_wrong1']."</td>
+                                                  <td>".$item['answer_wrong3']."</td>
+                                                  <td>".$item['answer_wrong2']."</td>
+                                                  <td><a class='btn btn-primary' role='button' href='edit-question?question_id=".$item['question_id']."'>Edit</td>
+                                                </tr>
+                                            ";
+                                        }
+                                    ?>
+                                </table>
+                            </div>
+                            <div role='tabpanel' class='tab-pane' id='region4a'>
+                                <table class='table'>
+                                    <thead>
+                                        <th scope='col'>Question ID</th>
+                                        <th scope='col'>Question</th>
+                                        <th scope='col'>Correct Answer</th>
+                                        <th scope='col'>Wrong Answer 1</th>
+                                        <th scope='col'>Wrong Answer 2</th>
+                                        <th scope='col'>Wrong Answer 3</th>
+                                        <th scope='col'>View Page</th>
+                                    </thead>
+                                    <?php
+                                        foreach($questions['region4a'] as $item){
+                                            echo "
+                                                <tr>
+                                                  <th scope='row'>".$item['question_id']."</th>
+                                                  <td>".$item['question']."</td>
+                                                  <td>".$item['answer_correct']."</td>
+                                                  <td>".$item['answer_wrong1']."</td>
+                                                  <td>".$item['answer_wrong3']."</td>
+                                                  <td>".$item['answer_wrong2']."</td>
+                                                  <td><a class='btn btn-primary' role='button' href='edit-question?question_id=".$item['question_id']."'>Edit</td>
+                                                </tr>
+                                            ";
+                                        }
+                                    ?>
+                                </table>
+                            </div>
+                            <div role='tabpanel' class='tab-pane' id='mimaropa'>
+                                <table class='table'>
+                                    <thead>
+                                        <th scope='col'>Question ID</th>
+                                        <th scope='col'>Question</th>
+                                        <th scope='col'>Correct Answer</th>
+                                        <th scope='col'>Wrong Answer 1</th>
+                                        <th scope='col'>Wrong Answer 2</th>
+                                        <th scope='col'>Wrong Answer 3</th>
+                                        <th scope='col'>View Page</th>
+                                    </thead>
+                                    <?php
+                                        foreach($questions['mimaropa'] as $item){
+                                            echo "
+                                                <tr>
+                                                  <th scope='row'>".$item['question_id']."</th>
+                                                  <td>".$item['question']."</td>
+                                                  <td>".$item['answer_correct']."</td>
+                                                  <td>".$item['answer_wrong1']."</td>
+                                                  <td>".$item['answer_wrong3']."</td>
+                                                  <td>".$item['answer_wrong2']."</td>
+                                                  <td><a class='btn btn-primary' role='button' href='edit-question?question_id=".$item['question_id']."'>Edit</td>
+                                                </tr>
+                                            ";
+                                        }
+                                    ?>
+                                </table>
+                            </div>
+                            <div role='tabpanel' class='tab-pane' id='region5'>
+                                <table class='table'>
+                                    <thead>
+                                        <th scope='col'>Question ID</th>
+                                        <th scope='col'>Question</th>
+                                        <th scope='col'>Correct Answer</th>
+                                        <th scope='col'>Wrong Answer 1</th>
+                                        <th scope='col'>Wrong Answer 2</th>
+                                        <th scope='col'>Wrong Answer 3</th>
+                                        <th scope='col'>View Page</th>
+                                    </thead>
+                                    <?php
+                                        foreach($questions['region5'] as $item){
+                                            echo "
+                                                <tr>
+                                                  <th scope='row'>".$item['question_id']."</th>
+                                                  <td>".$item['question']."</td>
+                                                  <td>".$item['answer_correct']."</td>
+                                                  <td>".$item['answer_wrong1']."</td>
+                                                  <td>".$item['answer_wrong3']."</td>
+                                                  <td>".$item['answer_wrong2']."</td>
+                                                  <td><a class='btn btn-primary' role='button' href='edit-question?question_id=".$item['question_id']."'>Edit</td>
+                                                </tr>
+                                            ";
+                                        }
+                                    ?>
+                                </table>
+                            </div>
+                            <div role='tabpanel' class='tab-pane' id='region6'>
+                                <table class='table'>
+                                    <thead>
+                                        <th scope='col'>Question ID</th>
+                                        <th scope='col'>Question</th>
+                                        <th scope='col'>Correct Answer</th>
+                                        <th scope='col'>Wrong Answer 1</th>
+                                        <th scope='col'>Wrong Answer 2</th>
+                                        <th scope='col'>Wrong Answer 3</th>
+                                        <th scope='col'>View Page</th>
+                                    </thead>
+                                    <?php
+                                        foreach($questions['region6'] as $item){
+                                            echo "
+                                                <tr>
+                                                  <th scope='row'>".$item['question_id']."</th>
+                                                  <td>".$item['question']."</td>
+                                                  <td>".$item['answer_correct']."</td>
+                                                  <td>".$item['answer_wrong1']."</td>
+                                                  <td>".$item['answer_wrong3']."</td>
+                                                  <td>".$item['answer_wrong2']."</td>
+                                                  <td><a class='btn btn-primary' role='button' href='edit-question?question_id=".$item['question_id']."'>Edit</td>
+                                                </tr>
+                                            ";
+                                        }
+                                    ?>
+                                </table>
+                            </div>
+                            <div role='tabpanel' class='tab-pane' id='region7'>
+                                <table class='table'>
+                                    <thead>
+                                        <th scope='col'>Question ID</th>
+                                        <th scope='col'>Question</th>
+                                        <th scope='col'>Correct Answer</th>
+                                        <th scope='col'>Wrong Answer 1</th>
+                                        <th scope='col'>Wrong Answer 2</th>
+                                        <th scope='col'>Wrong Answer 3</th>
+                                        <th scope='col'>View Page</th>
+                                    </thead>
+                                    <?php
+                                        foreach($questions['region7'] as $item){
+                                            echo "
+                                                <tr>
+                                                  <th scope='row'>".$item['question_id']."</th>
+                                                  <td>".$item['question']."</td>
+                                                  <td>".$item['answer_correct']."</td>
+                                                  <td>".$item['answer_wrong1']."</td>
+                                                  <td>".$item['answer_wrong3']."</td>
+                                                  <td>".$item['answer_wrong2']."</td>
+                                                  <td><a class='btn btn-primary' role='button' href='edit-question?question_id=".$item['question_id']."'>Edit</td>
+                                                </tr>
+                                            ";
+                                        }
+                                    ?>
+                                </table>
+                            </div>
+                            <div role='tabpanel' class='tab-pane' id='region8'>
+                                <table class='table'>
+                                    <thead>
+                                        <th scope='col'>Question ID</th>
+                                        <th scope='col'>Question</th>
+                                        <th scope='col'>Correct Answer</th>
+                                        <th scope='col'>Wrong Answer 1</th>
+                                        <th scope='col'>Wrong Answer 2</th>
+                                        <th scope='col'>Wrong Answer 3</th>
+                                        <th scope='col'>View Page</th>
+                                    </thead>
+                                    <?php
+                                        foreach($questions['region8'] as $item){
+                                            echo "
+                                                <tr>
+                                                  <th scope='row'>".$item['question_id']."</th>
+                                                  <td>".$item['question']."</td>
+                                                  <td>".$item['answer_correct']."</td>
+                                                  <td>".$item['answer_wrong1']."</td>
+                                                  <td>".$item['answer_wrong3']."</td>
+                                                  <td>".$item['answer_wrong2']."</td>
+                                                  <td><a class='btn btn-primary' role='button' href='edit-question?question_id=".$item['question_id']."'>Edit</td>
+                                                </tr>
+                                            ";
+                                        }
+                                    ?>
+                                </table>
+                            </div>
+                            <div role='tabpanel' class='tab-pane' id='region9'>
+                                <table class='table'>
+                                    <thead>
+                                        <th scope='col'>Question ID</th>
+                                        <th scope='col'>Question</th>
+                                        <th scope='col'>Correct Answer</th>
+                                        <th scope='col'>Wrong Answer 1</th>
+                                        <th scope='col'>Wrong Answer 2</th>
+                                        <th scope='col'>Wrong Answer 3</th>
+                                        <th scope='col'>View Page</th>
+                                    </thead>
+                                    <?php
+                                        foreach($questions['region9'] as $item){
+                                            echo "
+                                                <tr>
+                                                  <th scope='row'>".$item['question_id']."</th>
+                                                  <td>".$item['question']."</td>
+                                                  <td>".$item['answer_correct']."</td>
+                                                  <td>".$item['answer_wrong1']."</td>
+                                                  <td>".$item['answer_wrong3']."</td>
+                                                  <td>".$item['answer_wrong2']."</td>
+                                                  <td><a class='btn btn-primary' role='button' href='edit-question?question_id=".$item['question_id']."'>Edit</td>
+                                                </tr>
+                                            ";
+                                        }
+                                    ?>
+                                </table>
+                            </div>
+                            <div role='tabpanel' class='tab-pane' id='region10'>
+                                <table class='table'>
+                                    <thead>
+                                        <th scope='col'>Question ID</th>
+                                        <th scope='col'>Question</th>
+                                        <th scope='col'>Correct Answer</th>
+                                        <th scope='col'>Wrong Answer 1</th>
+                                        <th scope='col'>Wrong Answer 2</th>
+                                        <th scope='col'>Wrong Answer 3</th>
+                                        <th scope='col'>View Page</th>
+                                    </thead>
+                                    <?php
+                                        foreach($questions['region10'] as $item){
+                                            echo "
+                                                <tr>
+                                                  <th scope='row'>".$item['question_id']."</th>
+                                                  <td>".$item['question']."</td>
+                                                  <td>".$item['answer_correct']."</td>
+                                                  <td>".$item['answer_wrong1']."</td>
+                                                  <td>".$item['answer_wrong3']."</td>
+                                                  <td>".$item['answer_wrong2']."</td>
+                                                  <td><a class='btn btn-primary' role='button' href='edit-question?question_id=".$item['question_id']."'>Edit</td>
+                                                </tr>
+                                            ";
+                                        }
+                                    ?>
+                                </table>
+                            </div>
+                            <div role='tabpanel' class='tab-pane' id='region11'>
+                                <table class='table'>
+                                    <thead>
+                                        <th scope='col'>Question ID</th>
+                                        <th scope='col'>Question</th>
+                                        <th scope='col'>Correct Answer</th>
+                                        <th scope='col'>Wrong Answer 1</th>
+                                        <th scope='col'>Wrong Answer 2</th>
+                                        <th scope='col'>Wrong Answer 3</th>
+                                        <th scope='col'>View Page</th>
+                                    </thead>
+                                    <?php
+                                        foreach($questions['region11'] as $item){
+                                            echo "
+                                                <tr>
+                                                  <th scope='row'>".$item['question_id']."</th>
+                                                  <td>".$item['question']."</td>
+                                                  <td>".$item['answer_correct']."</td>
+                                                  <td>".$item['answer_wrong1']."</td>
+                                                  <td>".$item['answer_wrong3']."</td>
+                                                  <td>".$item['answer_wrong2']."</td>
+                                                  <td><a class='btn btn-primary' role='button' href='edit-question?question_id=".$item['question_id']."'>Edit</td>
+                                                </tr>
+                                            ";
+                                        }
+                                    ?>
+                                </table>
+                            </div>
+                            <div role='tabpanel' class='tab-pane' id='region12'>
+                                <table class='table'>
+                                    <thead>
+                                        <th scope='col'>Question ID</th>
+                                        <th scope='col'>Question</th>
+                                        <th scope='col'>Correct Answer</th>
+                                        <th scope='col'>Wrong Answer 1</th>
+                                        <th scope='col'>Wrong Answer 2</th>
+                                        <th scope='col'>Wrong Answer 3</th>
+                                        <th scope='col'>View Page</th>
+                                    </thead>
+                                    <?php
+                                        foreach($questions['region12'] as $item){
+                                            echo "
+                                                <tr>
+                                                  <th scope='row'>".$item['question_id']."</th>
+                                                  <td>".$item['question']."</td>
+                                                  <td>".$item['answer_correct']."</td>
+                                                  <td>".$item['answer_wrong1']."</td>
+                                                  <td>".$item['answer_wrong3']."</td>
+                                                  <td>".$item['answer_wrong2']."</td>
+                                                  <td><a class='btn btn-primary' role='button' href='edit-question?question_id=".$item['question_id']."'>Edit</td>
+                                                </tr>
+                                            ";
+                                        }
+                                    ?>
+                                </table>
+                            </div>
+                            <div role='tabpanel' class='tab-pane' id='region13'>
+                                <table class='table'>
+                                    <thead>
+                                        <th scope='col'>Question ID</th>
+                                        <th scope='col'>Question</th>
+                                        <th scope='col'>Correct Answer</th>
+                                        <th scope='col'>Wrong Answer 1</th>
+                                        <th scope='col'>Wrong Answer 2</th>
+                                        <th scope='col'>Wrong Answer 3</th>
+                                        <th scope='col'>View Page</th>
+                                    </thead>
+                                    <?php
+                                        foreach($questions['region13'] as $item){
+                                            echo "
+                                                <tr>
+                                                  <th scope='row'>".$item['question_id']."</th>
+                                                  <td>".$item['question']."</td>
+                                                  <td>".$item['answer_correct']."</td>
+                                                  <td>".$item['answer_wrong1']."</td>
+                                                  <td>".$item['answer_wrong3']."</td>
+                                                  <td>".$item['answer_wrong2']."</td>
+                                                  <td><a class='btn btn-primary' role='button' href='edit-question?question_id=".$item['question_id']."'>Edit</td>
+                                                </tr>
+                                            ";
+                                        }
+                                    ?>
+                                </table>
+                            </div>
+                            <div role='tabpanel' class='tab-pane' id='armm'>
+                                <table class='table'>
+                                    <thead>
+                                        <th scope='col'>Question ID</th>
+                                        <th scope='col'>Question</th>
+                                        <th scope='col'>Correct Answer</th>
+                                        <th scope='col'>Wrong Answer 1</th>
+                                        <th scope='col'>Wrong Answer 2</th>
+                                        <th scope='col'>Wrong Answer 3</th>
+                                        <th scope='col'>View Page</th>
+                                    </thead>
+                                    <?php
+                                        foreach($questions['armm'] as $item){
+                                            echo "
+                                                <tr>
+                                                  <th scope='row'>".$item['question_id']."</th>
+                                                  <td>".$item['question']."</td>
+                                                  <td>".$item['answer_correct']."</td>
+                                                  <td>".$item['answer_wrong1']."</td>
+                                                  <td>".$item['answer_wrong3']."</td>
+                                                  <td>".$item['answer_wrong2']."</td>
+                                                  <td><a class='btn btn-primary' role='button' href='edit-question?question_id=".$item['question_id']."'>Edit</td>
+                                                </tr>
+                                            ";
+                                        }
+                                    ?>
+                                </table>
+                            </div>
                         </div>
                     </ul>
                 </div>
@@ -250,37 +733,7 @@
 <!--end of modal for questions-->
 
 <!-- start of issues modal-->
-<div class='modal fade' id='issues-modal'>
-    <div class='modal-dialog'>
-        <div class='modal-content'>
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Currently Posted Issues</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class='modal-content'>
-                <div class='container'>
-                    <!--start of issues-->
-                <div class='container'>
-                    <div class='card'>
-                        <div class='card-header'>
-                            Issue # 100
-                        </div>
-                        <div class='card-body'>
-                            <p class='card-text'>
-                                Issue on {xxx} submitted by {someone}
-                            </p>
-                            <a class='btn btn-primary' role='btn' href='#'>Mark as resolved</a>
-                        </div>
-                    </div>
-                </div>
-                <!--end of issues-->
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 <!--end of issues modal-->
     
 <!-- add question modal start-->

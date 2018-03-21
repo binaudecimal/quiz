@@ -13,7 +13,7 @@
         
         <div class='container-fluid'>
                     <nav class='navbar navbar-expand-lg navbar-dark bg-primary fixed-top'>
-					 <a class="navbar-brand" href="home">Home</a>
+					 <a class="navbar-brand" href="home" accesskey='1'>Home</a>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ml-auto">
                             <?php
@@ -21,7 +21,7 @@
                                     echo "
                                         <form class='form-inline' action='login' method='POST'>
                                             <li class='nav-item'>
-                                                <input class='form-control' type='text' placeholder='Username' name='username'>
+                                                <input class='form-control' type='text' placeholder='Username' name='username' autofocus='auto'>
                                             </li>
                                             <li class='nav-item'>
                                                 <input class='form-control' type='password' placeholder='Password' name='password'>
@@ -38,7 +38,7 @@
                                         Welcome ".$_SESSION['first']." ".$_SESSION['last']."
                                     </span>
                                     <li class='nav-item'>
-                                        <a class='btn btn-light' role='button' name='logout-submit' href='logout'>LOGOUT</a>
+                                        <a class='btn btn-light' role='button' name='logout-submit' href='logout' accesskey='2'>LOGOUT</a>
                                     </li>
                                 ";
                             }

@@ -19,6 +19,10 @@
                             echo "
                                 <div class='alert alert-success'>Quiz completed. Graph of scores updated.</div>
                             ";break;
+                        case 'addIssue-success':
+                            echo "
+                                <div class='alert alert-success'>Issue posted successfully. It will be visible to your teachers.</div>
+                            ";break;
                     }
                 }
             ?>

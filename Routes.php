@@ -85,4 +85,5 @@
     Route::set('db-form-submit', function(){
         UserController::initDatabase();
     });
+
 ?>

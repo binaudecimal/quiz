@@ -159,6 +159,11 @@ class User extends Database{
             $sql = file_get_contents('build.sql');
             $pdo = self::connect();
             $pdo->exec($sql);
+            
+            $sql = file_get_contents('inserts.sql');
+            $pdo = self::connect();
+            $pdo->exec($sql);
+            
             $stmt = $pdo->prepare("INSERT INTO users (first, last, username, password, type) VALUES (?,?,?,?, 'ADMIN')");
             $stmt->bindParam(1, $first);
             $stmt->bindParam(2, $last);
@@ -172,6 +177,23 @@ class User extends Database{
             die("DB ERROR: ". $e->getMessage());
             $dbh->rollBack();
             $dbh->exec("DROP DATABASE 'quiz'");
+            return false;
+        }
+    }
+    
+    public function checkUser($session_id, $user_id){
+        try{
+            $pdo = self::connect();
+            $stmt= $pdo->prepare('SELECT session_id, user_id FROM users WHERE user_id = ?');
+            $stmt->bindValue(1, $user_id);
+            $stmt->execute();
+            $user_row = $stmt->fetch();
+            if(!$session_id == $user_row['session_id']){
+                return false;
+            }
+            return true;
+        }
+        catch(Exception $e){
             return false;
         }
     }

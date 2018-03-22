@@ -1,6 +1,11 @@
 <?php
     Controller::setSession();
     $image = floor(rand(1,6));
+    if(isset($_SESSION['user_id'])){
+        if(!Controller::checkUser()){
+            Controller::createView('index');
+        }
+    }
 ?>
 
 <html>

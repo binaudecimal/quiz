@@ -39,4 +39,6 @@ class StatController extends Controller{
             return $stat_model->getStudentQuizReport($student_id);
         }
     }
+    
+    
 }

@@ -3,8 +3,8 @@
     $quizzes = StatController::getStudentQuizReport();
 ?>
 
-<div class='container-fluid'>
-    <div class='jumbotron h-75 mt-1'>
+<div class='container-fluid mt-5 pt-5'>
+    <div class='jumbotron h-100 mt-1'>
         <div class='container'>
             <!-- status starts -->
             <?php
@@ -43,7 +43,7 @@
                 </div>
             </div>
             <div class='container col-9 float-left'>
-                <div class='container col-3'>
+                <div class='container col-6'>
                     <canvas id='score' height='600' width='800'></canvas>
                 </div>
             </div>
@@ -89,6 +89,13 @@
                                 <dd class='col-9'>
                                     ".$item['total_score']."
                                 </dd>
+                                <dt class='col-3'>
+                                    Display Summary
+                                </dt>
+                                <dd class='col-9'>
+                                    <a class='btn btn-info' href='review?qinstance_id=".$item['qinstance_id']."'>Review</a>
+                                </dd>
+                                
                                 <hr class='my-4'>
                             ";
                         }

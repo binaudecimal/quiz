@@ -38,5 +38,14 @@
                     break;
             }
         }
+        
+        public static function checkUser(){
+            self::setSession();
+            $session_id = $_SESSION['session_id'];
+            $user_id = $_SESSION['user_id'];
+            
+            $user_model = new User();
+            return $user_model->checkUser($session_id, $user_id);
+        }
 	}
 ?>

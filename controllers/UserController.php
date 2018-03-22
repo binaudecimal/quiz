@@ -126,5 +126,7 @@ class UserController extends Controller{
         header('Location: home?status=db-success');
         exit();
     }
+    
+    
 }
 ?>

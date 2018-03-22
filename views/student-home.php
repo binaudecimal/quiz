@@ -37,7 +37,7 @@
                             <a href="quiz-start" class="list-group-item list-group-item-action list-group-item-primary" role="button">Start Quiz</a>
                             <a href="#" class="list-group-item list-group-item-action list-group-item-info" data-toggle="modal" data-target="#quiz-review-modal" role="button">Review Quizzes</a>
                             <a href="#" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#issue-modal" role="button">Have Concerns? Message us!</a>
-                            
+                            <a href="#" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#faq-modal" role="button">Help</a>
                         </div>
                     </div>
                 </div>
@@ -47,6 +47,7 @@
                     <canvas id='score' height='600' width='800'></canvas>
                 </div>
             </div>
+            
         </div>
     </div>
 </div>
@@ -135,6 +136,30 @@
     </div>
 </div>
 <!-- end of issue modal-->
+<!-- start of FAQ modal-->
+<div class='modal fade' id='faq-modal'>
+    <div class='modal-dialog'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <h5 class='modal-title'>Help</h5>
+                <button type='button' class='close' data-dismiss='modal'><span aria-hidden='true'>&times;</span></button>
+            </div>
+            <div class='modal-body'>
+                <div class='container-fluid float-left'>
+                    <p class='lead'>
+                        The student can take the quiz only of the teacher enables one. It can be started using the [Start Quiz] Button on the sidebar. 
+                        The students may also view their results using the [Review Quizzes] button on the sidebar. This includes the student's answers, the correct answers, and the explanation for it.
+
+                        If the student found any error in the system, quiz questions or answers, correction on scores, the teachers can be contacted using the [Have Concerns? Message us!] button.
+
+                        There are keyboard shortcuts when taking the quiz. For Google Chrome users, this is <kbd>alt + z</kbd>, <kbd>alt + x</kbd>, <kbd>alt + c</kbd>, and <kbd>alt + v</kbd>. For Mozilla Firefox users, this is <kbd>alt + shift + z</kbd>, <kbd>alt + shift + x</kbd>, <kbd>alt + shift + c</kbd>, and <kbd>alt + shift + v</kbd>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end of FAQ modal-->
 <script>
     $('document').ready(function(){
         var ctx = document.getElementById('score').getContext('2d');

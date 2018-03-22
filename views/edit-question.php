@@ -51,6 +51,9 @@
 
                         <label for="answer_wrong3">Answer 4 (Wrong)</label>
                         <input class='form-control' type='text' placeholder='Answer 4 (Wrong)' name='answer_wrong3' id='answer_wrong3' value='<?php echo $question['answer_wrong3'];?>'>
+                        
+                        <label for="explanation">Explanation</label>
+                        <input class='form-control' type='text' placeholder='Explanation (Optional)' name='explanation' id='explanation' value='<?php echo $question['explanation'];?>'>
 
                         <div class='container-fluid mt-3'>
                             <button class='btn btn-primary'>SUBMIT</button>

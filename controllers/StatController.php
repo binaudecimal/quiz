@@ -40,5 +40,15 @@ class StatController extends Controller{
         }
     }
     
+    public static function getReviewStat(){
+        self::setSession();
+        $stat_model = new Stat();
+        $qinstance_id = $_GET['qinstance_id'];
+        $status = $stat_model->getReviewStat($qinstance_id);
+        $_SESSION['review-items'] = $status;
+        header('Location: review-display');
+        exit();
+    }
+    
     
 }

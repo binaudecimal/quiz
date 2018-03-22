@@ -86,8 +86,13 @@ class QuestionController extends Controller{
         $answer_wrong1 = $_POST['answer_wrong1'];
         $answer_wrong2 = $_POST['answer_wrong2'];
         $answer_wrong3 = $_POST['answer_wrong3'];
+        $explanation = $_POST['explanation'];
+        
         $question_model = new Question();
-        if($question_model->addQuestion($region, $question, $answer_correct, $answer_wrong1, $answer_wrong2,$answer_wrong3)){
+        $status = $question_model->addQuestion($region, $question, $answer_correct, $answer_wrong1, $answer_wrong2,$answer_wrong3, $explanation);
+        var_dump($status);
+        
+        if(!$status){
             header('Location: teacher?status=adding-successful');
             exit();
         }
@@ -95,6 +100,7 @@ class QuestionController extends Controller{
             header('Location: teacher?status=adding-failed');
             exit();
         }
+        
     }
     
     public static function getAllQuestionsByRegion(){
@@ -144,12 +150,14 @@ class QuestionController extends Controller{
         $answer_wrong1 = $_POST['answer_wrong1'];
         $answer_wrong2 = $_POST['answer_wrong2'];
         $answer_wrong3 = $_POST['answer_wrong3'];
+        $explanation = $_POST['explanation'];
         if(empty($question_id) || empty($question) || empty($region) || empty($answer_correct) || empty($answer_wrong1) || empty($answer_wrong2) || empty($answer_wrong3)){
             header('Location: edit-question?status=field-incomplete');
             exit();
         }
         $question_model = new Question();
-        $status = $question_model->questionEdit($question_id, $question, $region, $answer_correct, $answer_wrong1, $answer_wrong2, $answer_wrong3);
+        $status = $question_model->questionEdit($question_id, $question, $region, $answer_correct, $answer_wrong1, $answer_wrong2, $answer_wrong3, $explanation);
+
         if(!$status){
             header('Location: teacher?status=questionEdit-failed');
             exit();

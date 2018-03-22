@@ -114,4 +114,44 @@ class Stat extends Database{
         }
     }
     
-   
+    public function getReviewStat($qinstance_id){
+        try{
+            $pdo = self::connect();
+            $stmt = $pdo->prepare('SELECT * FROM quiz_instance where qinstance_id = ?');
+            $stmt->bindValue(1, $qinstance_id);
+            $stmt->execute();
+            $qinstance_row = $stmt->fetch();
+            if(!$qinstance_row){
+                return false;
+            }
+            //get all answers
+            $stmt= $pdo->prepare('SELECT answer_instance.answer, questions.answer_correct, questions.explanation, questions.question FROM answer_instance NATURAL JOIN questions NATURAL JOIN quiz_instance WHERE quiz_instance.qinstance_id = ?');
+            $stmt->bindValue(1, $qinstance_id);
+            $stmt->execute();
+            
+            //iterate through answers, return array
+            $result = [];
+            $status = $stmt->fetchAll();
+            if(!$status) return false;
+            foreach($status as $item){
+                $result['data'][] = ['answer'=>$item['answer'],
+                            'answer_correct'=>$item['answer_correct'],
+                             'explanation'=>$item['explanation'],
+                                   'question'=>$item['question'],
+                             ];
+            }
+            $result['items'] = $qinstance_row['items'];
+            $result['duration'] = $qinstance_row['duration'];
+            $result['region'] = $qinstance_row['region'];
+            $result['total_score'] = $qinstance_row['total_score'];
+            $result['date_finished'] = $qinstance_row['date_finished'];
+            
+            return $result;
+            
+        }
+        catch(Exception $e){
+            
+        }
+        
+    }
+}

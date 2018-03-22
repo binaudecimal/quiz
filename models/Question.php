@@ -167,12 +167,13 @@ class Question extends Database{
             return false;
         }
     }
-    public function addQuestion($region, $question, $answer_correct, $answer_wrong1, $answer_wrong2,$answer_wrong3){
+    public function addQuestion($region, $question, $answer_correct, $answer_wrong1, $answer_wrong2,$answer_wrong3, $explanation){
         try{
             $pdo = self::connect();
+            if(!$explanation) $explanation = '';
             $pdo->beginTransaction();
-            $stmt = $pdo->prepare('INSERT INTO questions (region, question, answer_correct, answer_wrong1, answer_wrong2, answer_wrong3, status) VALUES (?,?,?,?,?,?,1)');
-            $stmt->execute(array($region, $question, $answer_correct, $answer_wrong1, $answer_wrong2,$answer_wrong3));
+            $stmt = $pdo->prepare('INSERT INTO questions (region, question, answer_correct, answer_wrong1, answer_wrong2, answer_wrong3, status, explanation) VALUES (?,?,?,?,?,?,?,?)');
+            $stmt->execute(array($region, $question, $answer_correct, $answer_wrong1, $answer_wrong2,$answer_wrong3, 1, $explanation));
             $pdo->commit();
             return true;
         }   
@@ -246,12 +247,14 @@ class Question extends Database{
         }
     }
     
-    public function questionEdit($question_id, $question, $region, $answer_correct, $answer_wrong1, $answer_wrong2, $answer_wrong3){
+    public function questionEdit($question_id, $question, $region, $answer_correct, $answer_wrong1, $answer_wrong2, $answer_wrong3, $explanation){
         try{
             $pdo = self::connect();
+            $explanation = (!$explanation) ? '': $explanation;
+            $sql = 'UPDATE questions SET question = ?, region = ?, answer_correct = ?, answer_wrong1 = ?, answer_wrong2 = ?, answer_wrong3 = ?, explanation = ? WHERE question_id = ?';
             $pdo->beginTransaction();
-            $stmt = $pdo->prepare('UPDATE questions SET question = ?, region = ?, answer_correct = ?, answer_wrong1 = ?, answer_wrong2 = ?, answer_wrong3 = ?  WHERE question_id = ?');
-            $stmt->execute(array($question, $region, $answer_correct, $answer_wrong1, $answer_wrong2, $answer_wrong3, $question_id));
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute(array($question, $region, $answer_correct, $answer_wrong1, $answer_wrong2, $answer_wrong3, $explanation, $question_id));
             $pdo->commit();
             return true;
         }

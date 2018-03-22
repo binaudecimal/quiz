@@ -85,5 +85,11 @@
     Route::set('db-form-submit', function(){
         UserController::initDatabase();
     });
-
+    Route::set('review', function(){
+        StatController::getReviewStat();
+    });
+    Route::set('review-display', function(){
+        Controller::createView('review');
+    });
+    
 ?>

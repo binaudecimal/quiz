@@ -1,9 +1,7 @@
+
 <div class='container-fluid'>
-    <div class='jumbotron mt-2'>
+    <div class='jumbotron mt-5 pt-5'>
         <div class='container'>
-            <div class="alert alert-success" role="alert">
-              Status goes here
-            </div>
             <h5 class='hero text-align-center'>SIGNUP</h5>
             <hr class='my-4'>
             <div class='container'>
@@ -18,9 +16,10 @@
                         <label for="password">Password</label>
                         <input class='form-control' type='password' placeholder='Password' name='password' id='password'>
                         <label for="type">User Type</label>
-                        <select class="form-control" id="type" name='type'>
-                          <option>STUDENT</option>
-                          <option>TEACHER</option>
+                        <select class="form-control" id="type" name='type' >
+                            
+                          <option value='STUDENT'>STUDENT</option>
+                          <option value='TEACHER'>TEACHER</option>
                         </select>
                         <div id='additional-form'>
                             <label for="class">Class</label>

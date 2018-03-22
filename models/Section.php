@@ -35,4 +35,11 @@ class Section extends Database{
         $stmt->execute();
         return $stmt->fetchAll(); 
     }
+    
+    public static function teacherExist(){
+        $pdo = self::connect();
+        $stmt = $pdo->query('SELECT * FROM teachers limit 1');
+        $stmt->execute();
+        return ($stmt->fetch()) ? true: false;
+    }
 }

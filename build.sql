@@ -52,6 +52,14 @@ CREATE TABLE questions(
     status boolean not null
 );
 
+CREATE TABLE class_instance(
+	cinstance_id int(11) not null AUTO_INCREMENT PRIMARY KEY,
+    class_id int(11) not null,
+    region varchar(25) not null,
+    date_issued datetime not null,
+    FOREIGN KEY (class_id) REFERENCES class(class_id)
+);
+
 CREATE TABLE quiz_instance(
 	qinstance_id int(11) not null AUTO_INCREMENT PRIMARY KEY,
     student_id int(11) not null,
@@ -60,7 +68,10 @@ CREATE TABLE quiz_instance(
     region varchar(25) not null,
     total_score float,
     date_finished datetime,
-    FOREIGN KEY (student_id) REFERENCES students(student_id)
+    cinstance_id int(11) not null,
+    FOREIGN KEY (student_id) REFERENCES students(student_id),
+    FOREIGN KEY (cinstance_id) REFERENCES class_instance(cinstance_id)
+    
 );
 
 CREATE TABLE answer_instance(

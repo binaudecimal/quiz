@@ -27,24 +27,40 @@ class Question extends Database{
             $stmt = $pdo->prepare('UPDATE quiz_instance NATURAL JOIN students SET quiz_instance.date_finished = NOW() WHERE students.class_id = ?');
             $stmt->execute(array($class_id));
             
+            //insert class quiz instance
+            $stmt = $pdo->prepare('INSERT INTO class_instance (class_id, region, date_issued) values (?,?,NOW())');
+            $stmt->bindValue(1, $class_id);
+            $stmt->bindValue(2, $region);
+            $stmt->execute();
+            
+            //select cinstance
+            $stmt = $pdo->prepare('SELECT cinstance_id FROM class_instance WHERE class_id = ? and region = ? ORDER BY date_issued DESC');
+            $stmt->execute(array($class_id, $region));
+            $cinstance_id = $stmt->fetch()['cinstance_id'];
+            
+            //select students
             $stmt = $pdo->prepare('SELECT students.student_id from students NATURAL JOIN class WHERE class.class_id = ?');
             $stmt->execute(array($class_id));
             $students = $stmt->fetchAll();
             if(!$students){
                 return false;
             }
-            
             $questions = $stmt->fetchAll();
             foreach($students as $item){    
-                $stmt = $pdo->prepare('INSERT INTO quiz_instance (student_id, items, duration, region, total_score) values (?,?,?,?, 0)');
-                $stmt->execute(array($item['student_id'], $items, $duration, $region));
+                $stmt = $pdo->prepare('INSERT INTO quiz_instance (student_id, items, duration, region, cinstance_id, total_score) values (?,?,?,?, ?, 0)');
+                $stmt->bindValue(1, $item['student_id']);
+                $stmt->bindValue(2, $items);
+                $stmt->bindValue(3, $duration);
+                $stmt->bindValue(4, $region);
+                $stmt->bindValue(5, $cinstance_id);
+                $stmt->execute();
             }
             $pdo->commit();
             return true;
         }
         catch(Exception $e){
-            echo $e->getMessage();
             $pdo->rollBack();
+            return $e->getMessage();
         }   
     }
     
@@ -70,9 +86,9 @@ class Question extends Database{
             $stmt->execute(array($qinstance_id));
             $pdo->beginTransaction();
             if(!$stmt->fetch()){
-                $stmt = $pdo->prepare('SELECT * FROM questions where region= :region  and status = 1 ORDER BY RAND() limit :limit ');
-                $stmt->bindParam(':region', $region, PDO::PARAM_STR);
-                $stmt->bindParam(':limit', $items, PDO::PARAM_INT);
+                $stmt = $pdo->prepare('SELECT * FROM questions where region= ?  and status = 1 ORDER BY RAND() limit ? ');
+                $stmt->bindValue(1, $region, PDO::PARAM_STR);
+                $stmt->bindValue(2, $items, PDO::PARAM_INT);
                 $stmt->execute();
                 $questions = $stmt->fetchAll();
                 

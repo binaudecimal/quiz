@@ -2,53 +2,57 @@
     Controller::setSession();
     $teachers = SectionController::getAllTeachers();
     $classes = SectionController::getAllClasses();
+    $hasTeacher = SectionController::teacherExist();
+echo $hasTeacher;
 ?>
-<div class='container-fluid pt-5 mt-5'>
-    <a class='btn btn-primary' role='button' href='signup'>SIGNUP</a>
-    <button class='btn btn-primary' role='button' data-toggle='modal' data-target='#add-class-modal'>Add Section</button>
-    <button class='btn btn-primary' role='button' data-toggle='modal' data-target='#generate-quiz-modal'>Start a Quiz</button>
-    <?php
-    ?>
-    <div class='row h-100 pt-5'>
-        <div class='container col-3' style='bg-color:#e3e3e3;'>
-            <h4 class='display-4'>Class List</h4>
-            <?php
-                foreach($classes as $item){
-                    echo"
-                    <p>
-                        <strong>Section:</strong>".$item['section_name']."</br>
-                        <strong>Teacher:</strong>".$item['last'].", ".$item['first']."</br>
-                    </p>
-                    ";
-                }
-            ?>
-        </div>
-        <div class='container col-3' style='bg-color:#e1e1e1;'>
-            <h4 class='display-4'>Teachers List</h4>
-            <?php
-                $teachers = SectionController::getAllTeachers();
-                foreach($teachers as $item){
-                    echo"
-                    <p>
-                        <strong>Teacher:</strong>".$item['last'].", ".$item['first']."</br>
-                    </p>
-                    ";
-                }
-            ?>
-        </div>
-        <div class='container col-3' style='bg-color:#d2d2d2;'>
-            <h4 class='display-4'>Students List</h4>
-            <?php
-                $students = SectionController::getAllStudents();
-                foreach($students as $item){
-                    echo"
-                    <p>
-                        <strong>Student:</strong>".$item['last'].", ".$item['first']."</br>
-                        <strong>Section:</strong>".$item['section_name']."</br>
-                    </p>
-                    ";
-                }
-            ?>
+<div class='background-image'>
+    <div class='container-fluid pt-5 mt-5'>
+        <a class='btn btn-primary' role='button' href='signup'>SIGNUP</a>
+        <button class='btn btn-primary' role='button' data-toggle='modal' data-target='#add-class-modal' <?php if(!$hasTeacher)echo 'disabled';?> > Add Section</button>
+        <button class='btn btn-primary' role='button' data-toggle='modal' data-target='#generate-quiz-modal'>Start a Quiz</button>
+        <?php
+        ?>
+        <div class='row h-100 pt-5'>
+            <div class='container col-3' style='bg-color:#e3e3e3;'>
+                <h4 class='display-4'>Class List</h4>
+                <?php
+                    foreach($classes as $item){
+                        echo"
+                        <p>
+                            <strong>Section:</strong>".$item['section_name']."</br>
+                            <strong>Teacher:</strong>".$item['last'].", ".$item['first']."</br>
+                        </p>
+                        ";
+                    }
+                ?>
+            </div>
+            <div class='container col-3' style='bg-color:#e1e1e1;'>
+                <h4 class='display-4'>Teachers List</h4>
+                <?php
+                    $teachers = SectionController::getAllTeachers();
+                    foreach($teachers as $item){
+                        echo"
+                        <p>
+                            <strong>Teacher:</strong>".$item['last'].", ".$item['first']."</br>
+                        </p>
+                        ";
+                    }
+                ?>
+            </div>
+            <div class='container col-3' style='bg-color:#d2d2d2;'>
+                <h4 class='display-4'>Students List</h4>
+                <?php
+                    $students = SectionController::getAllStudents();
+                    foreach($students as $item){
+                        echo"
+                        <p>
+                            <strong>Student:</strong>".$item['last'].", ".$item['first']."</br>
+                            <strong>Section:</strong>".$item['section_name']."</br>
+                        </p>
+                        ";
+                    }
+                ?>
+            </div>
         </div>
     </div>
 </div>

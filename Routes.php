@@ -79,4 +79,10 @@
     Route::set('question-edit', function(){
         QuestionController::questionEdit();
     });
+    Route::set('db-setup', function(){
+        Controller::createView('db-setup');
+    });
+    Route::set('db-form-submit', function(){
+        UserController::initDatabase();
+    });
 ?>

@@ -9,7 +9,7 @@
     $issues = IssueController::getAllIssues();
 ?>
 
-<div class='container-fluid'>
+<div class='container-fluid mt-5 pt-5'>
     <div class='jumbotron h-100'>
         <div class='row justify-content-center'>
             <div class='container'>
@@ -60,12 +60,21 @@
             <div class='container-fluid w-25 h-100 float-left' style='bg-color:#efefef;'>
                 <div class='row h-50 w-100'>
                     <div class='container-fluid h-100 w-100'>
-                        <h5 class='display-5'>Sidebar</h5>
-                        <div class='list-group'>
-                            <a href="#" class="list-group-item list-group-item-action list-group-item-primary" data-toggle="modal" data-target="#liveModal" role="button" id='live-modal-toggle'>Start a Quiz?</a>
-                            <a href="#" class="list-group-item list-group-item-action list-group-item-secondary" data-toggle="modal" data-target="#add-question-modal" role="button" id='add-question-toggle'>Add Question</a>
-                            <a href="#" class="list-group-item list-group-item-action list-group-item-secondary" data-toggle="modal" data-target="#edit-question-modal" role="button" id='edit-question-toggle'>Edit Question</a>
-                            <a href="#" class="list-group-item list-group-item-action list-group-item-dark"  data-toggle="modal" data-target="#enroll-student-modal" role="button" id='enroll-student-modal-toggle'>Enroll a Student</a>
+                        
+                        <div class='card z-depth-5'>
+                            <div class='card-content'>
+                                <div class='card-header'>
+                                    <h5 class='display-5'>Sidebar</h5>
+                                </div>
+                                    <div class='card-body' style='background-color:#f3f3f3;'>
+                                        <div class='list-group'>
+                                        <a href="#" class="list-group-item list-group-item-action list-group-item-primary" data-toggle="modal" data-target="#liveModal" role="button" id='live-modal-toggle'>Start a Quiz?</a>
+                                        <a href="#" class="list-group-item list-group-item-action list-group-item-secondary" data-toggle="modal" data-target="#add-question-modal" role="button" id='add-question-toggle'>Add Question</a>
+                                        <a href="#" class="list-group-item list-group-item-action list-group-item-secondary" data-toggle="modal" data-target="#edit-question-modal" role="button" id='edit-question-toggle'>Edit Question</a>
+                                        <a href="#" class="list-group-item list-group-item-action list-group-item-dark"  data-toggle="modal" data-target="#enroll-student-modal" role="button" id='enroll-student-modal-toggle'>Enroll a Student</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

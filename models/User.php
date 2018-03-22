@@ -119,8 +119,61 @@ class User extends Database{
             return false;
         }
     }
-
-
-
+    
+    public function dbExist(){
+        try{
+            $pdo = self::connect();
+            $stmt = $pdo->prepare('SELECT * from users limit 1');
+            $stmt->execute();
+            if($stmt->fetch()) return true;
+            return false;
+        }
+        catch(Exception $e){
+            echo $e->getMessage();
+            return false;
+        }
+    }
+    
+    public function initDatabase($first, $last,$username,$password){
+        define('DB_HOST', '127.0.0.1'); // use ip address instead of `localhost`
+        // existing user that has permission to create database and grant access
+        define('DB_ROOT_USER', 'root');
+        define('DB_ROOT_PASS', '');
+        // the database you want to create
+        $dbname = 'quiz';
+        // specific user for this particular database
+        $dbuser = 'root';
+        $dbpass = '';
+        try {
+            // login with root user
+            $dbh = new PDO('mysql:host='.DB_HOST, DB_ROOT_USER, DB_ROOT_PASS);
+            // create database
+            $dbh->beginTransaction();
+            $dbh->exec(
+                "CREATE DATABASE `$dbname`;
+                CREATE USER '$dbuser'@'localhost' IDENTIFIED BY '$dbpass';
+                GRANT ALL ON `$dbname`.* TO '$dbuser'@'localhost';
+                FLUSH PRIVILEGES;"
+            ) 
+            or die(print_r($dbh->errorInfo(), true));
+            $sql = file_get_contents('build.sql');
+            $pdo = self::connect();
+            $pdo->exec($sql);
+            $stmt = $pdo->prepare("INSERT INTO users (first, last, username, password, type) VALUES (?,?,?,?, 'ADMIN')");
+            $stmt->bindParam(1, $first);
+            $stmt->bindParam(2, $last);
+            $stmt->bindParam(3, $username);
+            $stmt->bindParam(4, $password);
+            $stmt->execute();
+            $dbh->commit();
+            return true;
+            
+        } catch (PDOException $e) {
+            die("DB ERROR: ". $e->getMessage());
+            $dbh->rollBack();
+            $dbh->exec("DROP DATABASE 'quiz'");
+            return false;
+        }
+    }
 }
 ?>

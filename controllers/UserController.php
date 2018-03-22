@@ -101,5 +101,30 @@ class UserController extends Controller{
         exit();
     }
     
+    public static function dbExist(){
+        $user_model = new User();
+        $status = $user_model->dbExist();
+
+        if(!$status){
+            header('Location: db-setup');
+            exit();
+        }
+    }
+    
+    public static function initDatabase(){
+        $user_model = new User();
+        $first = $_POST['first'];
+        $last = $_POST['last'];
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        $hashed_pw = password_hash($password, PASSWORD_DEFAULT);
+        $status = $user_model->initDatabase($first, $last,$username,$hashed_pw);
+        if(!$status){
+            header('Location: db-setup?status=db-failed');
+            exit();
+        }
+        header('Location: home?status=db-success');
+        exit();
+    }
 }
 ?>

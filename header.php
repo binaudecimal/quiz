@@ -1,11 +1,13 @@
 <?php
     Controller::setSession();
+    $image = floor(rand(1,6));
 ?>
 
 <html>
     <header>
-        <title>Philippine Quiz Game</title>
+        <title>| PH Legends | Fun · Interactive · Dynamic </title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel='stylsheet' href='style.css'>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js'></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -13,7 +15,7 @@
         
         <div class='container-fluid'>
                     <nav class='navbar navbar-expand-lg navbar-dark bg-primary fixed-top'>
-					 <a class="navbar-brand" href="home" accesskey='1'>Home</a>
+					 <a class="navbar-brand" href="home" accesskey='1'><img src='logo.png' height='50px' width='250'></a>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ml-auto">
                             <?php
@@ -48,6 +50,19 @@
                     </div>
 			     </nav>
             </div>
+        <style>
+            .background-image {
+              position: fixed;
+              left: 0;
+              right: 0;
+              z-index: 1;
+
+              display: block;
+              background-image: url('<?php echo $image;?>.JPG');
+              width: 1920px;
+              height: 1080px;
+            }
+        </style>
     </header>
     
 </html>

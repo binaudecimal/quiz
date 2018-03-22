@@ -31,4 +31,10 @@ class SectionController extends Controller{
         $students = $section_model->getAllStudents();
         return $students;
     }
+    
+    public static function teacherExist(){
+        $section_model = new Section();
+        $status = $section_model->teacherExist();
+        return $status;
+    }
 }

@@ -21,7 +21,8 @@ class QuestionController extends Controller{
             $region = $_POST['region'];
             
             $question_model = new Question();
-            if(!$question_model->generateQuiz($class_id, $items, $duration, $region)){
+            $status = $question_model->generateQuiz($class_id, $items, $duration, $region);
+            if(!$status){
                 header('Location: teacher?status=startQuiz-failed');
                 exit();
             }
